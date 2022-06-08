@@ -29,32 +29,48 @@ void add_veiculo(fila_lst* fila_do_estacionamento) {
 
 void rm_veiculo(fila_lst* fila_do_estacionamento, int n_veiculos) {
 
-	char* placa_removida = (char*) malloc (sizeof(char) * TAMANHO_MAX );
-	placa_removida = fila_lst_retira(fila_do_estacionamento);
+	printf("\n\tFila atual do estacionamento:\n\t\t\t--------\n");
+	fila_lst_imprime(fila_do_estacionamento);
+	printf("\t\t\t--------\n");
 
-	if (placa_removida == ERRO) {
+	char* remover_placa = (char*)malloc(sizeof(char) * TAMANHO_MAX);
 
-		printf("\tEstado do estacionamento: Vazio!\n");
+	printf("\n\tPlaca do veiculo: ");
+	fgets(remover_placa, TAMANHO_MAX, stdin);
+
+	if (fila_lst_busca(fila_do_estacionamento, remover_placa) == NULL) {
+
+		printf("\tVeiculo nao encontrada!\n");
 		return;
 	}
 
-	fila_lst_inverte(fila_do_estacionamento);
+	lista_t* i_ponteiro = fila_do_estacionamento->inicio;
 
-	printf("\tVeiculo que saiu: %s\n", placa_removida);
-	
+	while (i_ponteiro != fila_lst_busca(fila_do_estacionamento, remover_placa) ) {
+
+		char* tmp = (char*)malloc(sizeof(char) * TAMANHO_MAX);
+		tmp = fila_lst_retira(fila_do_estacionamento);
+		fila_lst_insere(fila_do_estacionamento, tmp);
+		i_ponteiro = fila_do_estacionamento->inicio;
+	}
+
+	char* tmp = (char*)malloc(sizeof(char) * TAMANHO_MAX);
+	tmp = fila_lst_retira(fila_do_estacionamento);
+	free(tmp);
+
 	n_veiculos--;
 
 	if (n_veiculos < 1) {
-		printf("\tEstado do estacionamento: Vazio!\n");
+		printf("\tFila do estacionamento vazia!\n");
 	}
 	else {
-		printf("\tEstado do estacionamento: Ocupado por %02d veiculo(s)\n", n_veiculos);
-		printf("\n\tFila do estacionamento, ordem de saida:\n\t\t\t--------\n");
+		printf("\n\tFila do estacionamento atualizada:\n\t\t\t--------\n");
 		fila_lst_imprime(fila_do_estacionamento);
 		printf("\t\t\t--------\n");
 	}
 
 }
+
 
 int main (int argc, char** argv) {
 	
@@ -78,12 +94,12 @@ int main (int argc, char** argv) {
 			return SUCESSO;
 			break;
 		case 1:
-			qtd_veiculos++;
 			add_veiculo(main_fila);
+			qtd_veiculos++;
 			break;
 		case 2:
 			if (qtd_veiculos == 0) {
-				printf("\tEstacionamento vazio!\n");
+				printf("\tFila do estacionamento vazia!\n");
 			}
 			else {
 				rm_veiculo(main_fila, qtd_veiculos);
