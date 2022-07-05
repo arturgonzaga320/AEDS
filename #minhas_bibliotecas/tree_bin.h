@@ -16,17 +16,20 @@ typedef struct tree_bin_s{
 
 }tree_bin;
 
-tree_bin* tree_bin_cria(void);
+tree_bin* tree_bin_cria (void);
 
-bool tree_bin_vazia(tree_bin* tree_p);
+bool tree_bin_vazia (tree_bin* tree_p);
 
-tree_bin* tree_bin_insere(tree_bin* tree_p, char info_p);
+tree_bin* tree_bin_insere_prior (tree_bin* tree_p, char info_p);
 
-// preOrdem: raiz, esq, dir;
-void tree_bin_imprime_preOrdem (tree_bin* tree_p); 
-// simOrdem: esq, raiz, dir;
-void tree_bin_imprime_simOrdem (tree_bin* tree_p);
-// posOrdem: esq, dir, raiz;
-void tree_bin_imprime_posOrdem (tree_bin* tree_p);
+tree_bin* tree_bin_insere_dir (tree_bin* tree_p, char info_p);
+
+tree_bin* tree_bin_insere_esq (tree_bin* tree_p, char info_p);
+
+void tree_bin_imprime_preOrdem (tree_bin* tree_p); // preOrdem: raiz, esq, dir;
+
+void tree_bin_imprime_simOrdem (tree_bin* tree_p); // simOrdem: esq, raiz, dir;
+
+void tree_bin_imprime_posOrdem (tree_bin* tree_p); // posOrdem: esq, dir, raiz;
 
 void tree_bin_libera (tree_bin* tree_p);
