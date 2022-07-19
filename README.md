@@ -1,6 +1,6 @@
 ## AEDS - Algoritmos e Estruturas de Dados
 
-<p> Atividades voltadas ao desenvolvimento da manipulação de dados através da implementação de novas estruturas de dados. A partir do 2º Trimestre, será introduzida a Programação Orientada à Objeto (OOP)
+<p> Atividades voltadas ao desenvolvimento da manipulação de dados através de implementação de estruturas de dados. <br>A partir do 2º Trimestre, será introduzida a Programação Orientada à Objeto (OOP) com C# e/ou Python. </br> </p>
 
 <ul>
 <caption> Estruturas vistas até o momento</caption>
