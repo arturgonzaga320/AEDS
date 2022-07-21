@@ -6,7 +6,8 @@
 
 typedef uint8_t bool;
 
-typedef struct lst_s{
+typedef struct lst_s {
+
 	int info;
 	struct lst_s* prox;
 }lista_t;
