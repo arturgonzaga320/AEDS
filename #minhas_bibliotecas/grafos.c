@@ -27,7 +27,7 @@ grafo* grafo_insere(grafo* grafo_p, int vtx, int info_p) {
 	grafo* grafo_aux = (grafo*) malloc (sizeof(grafo));
 	grafo_aux->vtx_adj = (lista_t*)malloc(sizeof(lista_t));
 
-	grafo_aux->vtx_adj = lst_insere(grafo_aux, info_p);
+	grafo_aux->vtx_adj = lst_insere(grafo_aux->vtx_adj, info_p);
 
 	return grafo_aux;
 
