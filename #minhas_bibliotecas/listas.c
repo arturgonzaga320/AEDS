@@ -35,6 +35,23 @@ lista_t* lst_insere (lista_t* lista_p, int info_param){
 	return novo_elem;
 }
 
+lista_t* lst_pilha_insere(lista_t* lista_p, int info_param) {
+
+	lista_t* lista_aux = lista_p;
+
+	while (lista_aux->prox != NULL) lista_aux = lista_aux->prox;
+
+	lista_t* novo_elem;
+	novo_elem = (lista_t*)malloc(sizeof(lista_t));
+
+	novo_elem->info = info_param;
+	novo_elem->prox = NULL;
+
+	lista_aux->prox = novo_elem;
+
+	return lista_p;
+}
+
 // lista_t* lst_insere_ordenado (lista_t* lista_p, int info_param){
 
 void lst_retira(lista_t* lista_p) {
