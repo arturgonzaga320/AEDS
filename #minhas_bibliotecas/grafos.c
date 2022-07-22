@@ -4,19 +4,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "listas.h"
 #include "grafos.h"
 
-grafo* grafo_cria (grafo* gra_p, int n_vtx) {
+grafo* grafo_cria(int n_vtx) {
 
-	if (n_vtx!=0) {
+	grafo* grafo_aux = (grafo*) malloc(sizeof(grafo));
+	grafo_aux->vtx_adj = lst_cria();
+
+	if (n_vtx > 1) {
 		n_vtx--;
-		gra_p = grafo_cria(gra_p, n_vtx);
+		grafo_aux->next = grafo_cria(n_vtx);
 	}
-	
-	grafo* grafo_aux = (grafo*) malloc (sizeof(grafo));	
-	grafo_aux->vtx_adj= lst_cria();
-	grafo_aux->next = NULL; 
+	else grafo_aux->next = NULL;
 
 	return grafo_aux;
 }

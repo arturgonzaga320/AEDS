@@ -14,13 +14,12 @@ typedef struct grafo_s {
 } grafo;
 
 
-grafo* grafo_cria(grafo* gra_p, int n_vtx);
+grafo* grafo_cria(int n_vtx); // OK
 
-/*
-bool grafo_vazio (grafo* gra_p);
-*/
+//bool grafo_vazio (grafo* gra_p);
+
 grafo* grafo_insere (grafo* gra_p, int vtx_p, int info_p);
 
 grafo* grafo_insere_adj(grafo* gra_p, int vtx_p, int info_p);
 
-void grafo_libera (grafo* gra_p);
+void grafo_libera (grafo* gra_p); // Falta testar se limpa os vtx adjacentes

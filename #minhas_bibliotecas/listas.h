@@ -10,7 +10,7 @@ typedef struct lst_s {
 
 	int info;
 	struct lst_s* prox;
-}lista_t;
+} lista_t;
 
 lista_t* lst_cria();
 bool lst_vazia(lista_t* lista_p);

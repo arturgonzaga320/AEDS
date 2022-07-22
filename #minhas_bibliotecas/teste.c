@@ -1,15 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "grafos.h"
 
-#include "grafos.c"
 #define SUCESSO 0
 
 int main (int argc, char** argv){
 
-	grafo* gra_t;
+	grafo* gra_tmp = grafo_cria(4);
 
-	gra_t = grafo_cria(gra_t, 2);
-
-	grafo_libera(gra_t);
+	grafo_libera(gra_tmp);
 	return SUCESSO;
 }
