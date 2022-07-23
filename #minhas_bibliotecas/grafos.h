@@ -20,6 +20,12 @@ grafo* grafo_insere_vtx(grafo* grafo_p, lista_t* valores); // OK
 
 grafo* grafo_busca(grafo* grafo_p, int info_p); // OK
 
-grafo* grafo_insere_adj(grafo* gra_p, int vtx_p, int info_p); // OK
+grafo* grafo_insere_adj(grafo* grafo_p, int vtx_p, int info_p); // OK
 
-void grafo_libera (grafo* gra_p); // OK
+int grafo_obter_grau(grafo* grafo_p, int vtx_p);
+
+void grafo_nao_ordenado(grafo* grafo_p, int vtx_a, int vtx_b);
+
+void grafo_imprime(grafo* grafo_p);
+
+void grafo_libera (grafo* grafo_p); // OK

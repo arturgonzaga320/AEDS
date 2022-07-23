@@ -140,7 +140,7 @@ lista_t* lst_busca(lista_t* lista_p, int info_alvo){
 	
 	lista_t* i_ponteiro;
 	
-	for (i_ponteiro = lista_p; i_ponteiro->prox != NULL; i_ponteiro = i_ponteiro->prox){
+	for (i_ponteiro = lista_p; i_ponteiro != NULL; i_ponteiro = i_ponteiro->prox){
 		
 		if (i_ponteiro->info == info_alvo){
 			

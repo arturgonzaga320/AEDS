@@ -60,9 +60,69 @@ grafo* grafo_insere_adj(grafo* grafo_p, int vtx, int adj) {
 	return grafo_p;
 }
 
-void grafo_libera(grafo* gra_p) {
+int grafo_obter_grau(grafo* grafo_p, int vtx_p) {
 
-	grafo* i_pointer = gra_p;
+	int grau = 0;
+	grafo* i_pointer = grafo_busca(grafo_p, vtx_p);
+	lista_t* lista_aux = i_pointer->vtx_adj->prox;
+
+	while (lista_aux != NULL) {
+
+		grau++;
+		lista_aux = lista_aux->prox;
+	}
+	return grau;
+}
+
+void grafo_nao_ordenado(grafo* grafo_p, int vtx_a, int vtx_b) {
+
+	grafo_p = grafo_insere_adj(grafo_p, vtx_a, vtx_b);
+	grafo_p = grafo_insere_adj(grafo_p, vtx_b, vtx_a);
+}
+
+void grafo_imprime(grafo* grafo_p) {
+
+	grafo* i_pointer = grafo_p;
+	grafo* j_pointer;
+
+	printf("    ");
+
+	while (i_pointer != NULL) {
+
+		printf("%c   ", i_pointer->vtx_adj->info);
+		i_pointer = i_pointer->next;
+	}
+
+	i_pointer = grafo_p;
+
+	while (i_pointer != NULL) {
+
+		printf("\n%c   ", i_pointer->vtx_adj->info);
+		
+		j_pointer = grafo_p;
+
+		while (j_pointer != NULL) {
+
+			if (lst_busca(i_pointer->vtx_adj->prox, j_pointer->vtx_adj->info) != NULL) {
+
+				printf("1   ");
+			}
+			
+			else printf("0   ");
+
+			j_pointer = j_pointer->next;
+		}
+
+		i_pointer = i_pointer->next;
+	}
+
+	printf("\n");
+}
+
+
+void grafo_libera(grafo* grafo_p) {
+
+	grafo* i_pointer = grafo_p;
 
 	while (i_pointer != NULL) {
 
