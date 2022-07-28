@@ -18,7 +18,9 @@ grafo* grafo_cria(int n_vtx); // OK
 
 grafo* grafo_insere_vtx(grafo* grafo_p, lista_t* valores); // OK
 
-grafo* grafo_busca(grafo* grafo_p, int info_p); // OK
+grafo* grafo_busca_vtx(grafo* grafo_p, int vtx_p); // OK
+
+lista_t* grafo_busca_no_vtx(grafo* grafo_p, int vtx_p, int info_p); // OK
 
 grafo* grafo_insere_adj(grafo* grafo_p, int vtx_p, int info_p); // OK
 

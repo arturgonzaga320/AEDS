@@ -1,16 +1,17 @@
-/*
-* SOu uma decepção de El Maia
-* Não uso mais comentário
-* como posso dizer 
-* #ELMAIAFOREVER
-*/ 
 
+// Atividade de Grafos ( 02 )
+// Artur Gonzaga da Silva Gomes, 203
+// Profa. Virgínia Mota
+
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include "grafos.h"
 
+// Constantes
 #define SUCESSO 0
 
+// main
 int main(int argc, char** argv) {
 
 	int n_vertices = 4;

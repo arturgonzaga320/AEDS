@@ -34,7 +34,7 @@ grafo* grafo_insere_vtx (grafo* grafo_p,lista_t* valores) {
 	return grafo_p;
 }
 
-grafo* grafo_busca(grafo* grafo_p, int vtx_p) {
+grafo* grafo_busca_vtx(grafo* grafo_p, int vtx_p) {
 
 	grafo* i_pointer = grafo_p;
 
@@ -48,11 +48,30 @@ grafo* grafo_busca(grafo* grafo_p, int vtx_p) {
 	return i_pointer;
 }
 
+lista_t* grafo_busca_no_vtx(grafo* grafo_p, int vtx_p, int info_p) {
+
+	if (grafo_busca_vtx(grafo_p, vtx_p) == NULL) return NULL;
+	
+	grafo* i_pointer = grafo_busca_vtx (grafo_p, vtx_p);
+	lista_t* lista_aux = i_pointer->vtx_adj->prox;
+
+	while ( lista_aux != NULL ) {
+
+		if (lista_aux->info == info_p) return lista_aux;
+
+		lista_aux = lista_aux->prox;
+	}
+	
+	// se chegou aqui,
+	// info_p não encontrada no vertice vtx_p
+	return i_pointer;
+}
+
 grafo* grafo_insere_adj(grafo* grafo_p, int vtx, int adj) {
 
-	if (grafo_busca(grafo_p, vtx) != NULL) {
+	if (grafo_busca_vtx(grafo_p, vtx) != NULL) {
 
-		grafo* grafo_aux = grafo_busca(grafo_p, vtx);
+		grafo* grafo_aux = grafo_busca_vtx(grafo_p, vtx);
 
 		grafo_aux->vtx_adj = lst_pilha_insere(grafo_aux->vtx_adj, adj);
 	}
@@ -63,7 +82,7 @@ grafo* grafo_insere_adj(grafo* grafo_p, int vtx, int adj) {
 int grafo_obter_grau(grafo* grafo_p, int vtx_p) {
 
 	int grau = 0;
-	grafo* i_pointer = grafo_busca(grafo_p, vtx_p);
+	grafo* i_pointer = grafo_busca_vtx(grafo_p, vtx_p);
 	lista_t* lista_aux = i_pointer->vtx_adj->prox;
 
 	while (lista_aux != NULL) {
