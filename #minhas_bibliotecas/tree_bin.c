@@ -1,10 +1,15 @@
+// Julho, 2022
+// tree_bin.c - Artur Gonzaga
+// Desenvolvimento de Sistemas - COLTEC UFMG
+
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "tree_bin.h"
 
-#define VERDADEIRO 1 
-#define FALSO !VERDADEIRO
+#define VERDADEIRO 1 // (1 == 1)
+#define FALSO 0 // !VERDADEIRO
 
 typedef uint8_t bool;
 

@@ -1,10 +1,12 @@
+// Agosto, 2022
+// tree_var.h - Artur Gonzaga
+// Desenvolvimento de Sistemas - COLTEC UFMG
 
-// Artur Gonzaga da Silva Gomes
-// Desenvolvimento de Sistemas _ COLTEC-UFMG 
-
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
-#include "listas.h"
+#include <stdint.h>
+
 
 typedef uint8_t bool;
 
@@ -24,4 +26,6 @@ tree_var* tree_var_busca (tree_var* tree_p, int info_p);
 tree_var* tree_var_preenche (tree_var* tree_p, int info_p);
 
 tree_var* tree_var_add_bro (tree_var* tree_p, int info_p);
-tree_var* tree_var_add_son (tree_var* tree_p, int info_p, int altura);
+tree_var* tree_var_add_son (tree_var* tree_p, int info_p);
+
+void tree_var_libera (tree_var* tree_p);

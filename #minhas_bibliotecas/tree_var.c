@@ -1,9 +1,12 @@
-// Artur Gonzaga da Silva Gomes
-// Desenvolvimento de Sistemas, COLTEC-UFMG
+// Agosto, 2022
+// tree_var.c - Artur Gonzaga
+// Desenvolvimento de Sistemas - COLTEC UFMG
 
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include "tree_var.h"
+
 
 #define VERDADEIRO 1 // (1 == 1)
 #define FALSO 0 // !VERDADEIRO
@@ -82,22 +85,32 @@ tree_var* tree_var_add_bro ( tree_var* tree_p, int info_p) {
 	return tree_p;
 }
 
-
-
-tree_var* tree_var_add_son ( tree_var* tree_p, int info_p, int altura) {
+tree_var* tree_var_add_son ( tree_var* tree_p, int info_p) {
 
 	tree_var* i_pointer = tree_p;
 	
 	if (tree_var_vazia (i_pointer) == VERDADEIRO ) {
 
 		i_pointer = tree_var_preenche (i_pointer, info_p);
-
-		return i_pointer;
 	}
+	else i_pointer->son = tree_var_preenche (i_pointer, info_p);
 
-	if ( altura != 0 ) {
+	return i_pointer;
+}
+
+void tree_var_libera (tree_var* tree_p) {
+
+	tree_var* i_pointer = tree_p;
 	
-		altura --;
-		tree_var_add_son (i_pointer->son, info_p, altura);
+	if (i_pointer->bro != NULL) tree_var_libera (i_pointer->bro);
+
+	while (i_pointer != NULL) {
+		
+		tree_var* temp = i_pointer->son; 
+		free(i_pointer);
+		i_pointer = temp;
+
+		if ( ( tree_var_vazia (i_pointer) == FALSO ) && (i_pointer->bro != NULL) ) tree_var_libera (i_pointer->bro);
 	}
 }
+

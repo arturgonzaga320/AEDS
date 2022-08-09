@@ -1,10 +1,12 @@
-// Julho, 2022
-// listas.c - Artur Gonzaga
+// Agosto, 2022
+// grafos.c - Artur Gonzaga
 // Desenvolvimento de Sistemas - COLTEC UFMG
 
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
 #include "grafos.h"
+
 
 grafo* grafo_cria(int n_vtx) {
 
@@ -63,7 +65,7 @@ lista_t* grafo_busca_no_vtx(grafo* grafo_p, int vtx_p, int info_p) {
 	}
 	
 	// se chegou aqui,
-	// info_p não encontrada no vertice vtx_p
+	// info_p nï¿½o encontrada no vertice vtx_p
 	return i_pointer;
 }
 

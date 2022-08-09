@@ -2,10 +2,11 @@
 // Artur Gonzaga da Silva Gomes
 // Desenvolvimento de Sistemas - COLTEC-UFMG
 
+// Bibliotecas
 #include <stdio.h>
 #include <stdlib.h>
-
 #include "tree_var.h"
+
 
 #define SUCESSO 0
 
@@ -13,16 +14,18 @@ int main (int argc, char** argv) {
 
 	tree_var* tree_teste = tree_var_cria ();
 	
-	for (int i = 0; i < 10; i++) {
+	tree_teste = tree_var_preenche (tree_teste, 0);
+	tree_teste = tree_var_add_son (tree_teste, 11);
 
-		tree_teste = tree_var_add_bro (tree_teste, i);
-	}
-	
+	for (int i = 0; i < 4; i++) tree_teste->son = tree_var_add_bro (tree_teste->son,i);
 
-	for (tree_var* i_pointer = tree_teste; i_pointer != NULL; i_pointer = i_pointer->bro) {
+	tree_var* i_pointer = tree_teste->son->bro;
+	i_pointer = tree_var_add_son (i_pointer, 30);
+	i_pointer->son = tree_var_add_bro (i_pointer->son, 35);
 
-		printf("%d\n", i_pointer->info);			
-	}
+	for (int i = 0; i < 2; i++) i_pointer = tree_var_add_bro (i_pointer,i);
+
+	tree_var_libera (tree_teste);
 
 	return SUCESSO;
 }

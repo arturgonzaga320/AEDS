@@ -1,6 +1,12 @@
+// Julho, 2022
+// tree_bin.h, Artur Gonzaga
+// Desenvolvimento de Sistemas - COLTEC UFMG
+
+// Bibliotecas
 #include <stdio.h>
 #include <stdint.h>
 
+// Constantes
 #define VERDADEIRO 1
 #define FALSO !VERDADEIRO
 
