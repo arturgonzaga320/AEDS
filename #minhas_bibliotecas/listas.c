@@ -35,7 +35,8 @@ lista_t* lst_insere (lista_t* lista_p, int info_param){
 	return novo_elem;
 }
 
-lista_t* lst_pilha_insere(lista_t* lista_p, int info_param) {
+// Insere como se fosse uma pilha
+lista_t* lst_push(lista_t* lista_p, int info_param) {
 
 	lista_t* lista_aux = lista_p;
 
