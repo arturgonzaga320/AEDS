@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include "tree_bin.h"
 
+// Constantes
 #define VERDADEIRO 1 // (1 == 1)
 #define FALSO 0 // !VERDADEIRO
 

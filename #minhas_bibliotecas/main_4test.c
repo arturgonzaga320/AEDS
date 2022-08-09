@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include "tree_var.h"
 
-
+// Constantes
 #define SUCESSO 0
 
 int main (int argc, char** argv) {
