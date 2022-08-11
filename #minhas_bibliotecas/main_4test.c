@@ -13,9 +13,7 @@
 #define VERDADEIRO 1 // 1 == 1
 #define FALSO 0 // !VERDADEIRO
 
-tree_var* grafo_busca_largura (grafo* grafo_p, int n_vtx) {
-
-	tree_var* result = tree_var_cria ();
+grafo* grafo_ini_aux_busca () {
 
 	grafo* search_aux = grafo_cria (4);
 
@@ -50,20 +48,51 @@ tree_var* grafo_busca_largura (grafo* grafo_p, int n_vtx) {
 		i_pointer->vtx_adj = lst_push(i_pointer->vtx_adj, -1);
 	}
 
-	// Grafo search_aux inicializado, preprar funcao para percorrer 
-	// pelos vertices de grafo_p e modificar search_aux
-
-	// Apos estar completamente modificado, 
-	// * quando todas os elementos c->prox forem iguais a black (98) *
-	// implementar search_aux em uma tree_var e retorna-la
-
-	return result;
+	return search_aux;
 }
 
+tree_var* grafo_em_largura (grafo* grafo_p, grafo* search_aux, tree_var* tree_caminhos, int vtx_p) {
 
+	grafo* i_pointer = grafo_busca_vtx(grafo_p, vtx_p);
+
+	for (lista_t* j_pointer = i_pointer->vtx_adj->prox; j_pointer != NULL; j_pointer = j_pointer->prox) {
+
+		grafo* k_pointer = grafo_busca_vtx (search_aux, 113); // Adiciona vertice a lista de grafos a explorar				
+		
+		// Nao faz sentido repetir o vertice nas listas
+		if (lst_busca(k_pointer->vtx_adj->prox, j_pointer->info) != NULL ) { 
+
+			k_pointer->vtx_adj = lst_push (k_pointer->vtx_adj, j_pointer->info);
+		}
+		
+		
+		grafo* k_pointer = grafo_busca_vtx (i_pointer, 99); // Altera cor do vertice de branco para cinza
+		
+		// Nao faz sentido repetir o vertice nas listas
+		if (lst_busca(k_pointer->vtx_adj->prox, j_pointer->info) != NULL ) { 
+
+			k_pointer->vtx_adj = lst_push (k_pointer->vtx_adj, j_pointer->info);
+		}
+
+	}
+
+
+
+	return tree_caminhos;
+}
+
+// main
 int main (int argc, char** argv) {
 
-	tree_var ();
+	tree_var* tree_caminhos = tree_var_cria();
+
+	/*
+	COMENTARIOS DO QUE FAZER
+
+		> Implementar com matriz, ao inver de um grafo em search_aux
+	*/
+
+
 
 	return SUCESSO;
 }
