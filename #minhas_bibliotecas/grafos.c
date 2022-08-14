@@ -7,6 +7,17 @@
 #include <stdlib.h>
 #include "grafos.h"
 
+#define VERDADEIRO 1 // 1 == 1
+#define FALSO 0 // !VERDADEIRO
+
+#define K 1
+#define P 2
+#define C 3
+#define BRANCO 0
+#define CINZA 1
+#define PRETO 2
+#define GUIA_N_LINHAS 4
+
 
 grafo* grafo_cria(int n_vtx) {
 
@@ -65,8 +76,8 @@ lista_t* grafo_busca_no_vtx(grafo* grafo_p, int vtx_p, int info_p) {
 	}
 	
 	// se chegou aqui,
-	// info_p n�o encontrada no vertice vtx_p
-	return i_pointer;
+	// info_p nao encontrada no vertice vtx_p
+	return NULL;
 }
 
 grafo* grafo_insere_adj(grafo* grafo_p, int vtx, int adj) {
@@ -75,7 +86,7 @@ grafo* grafo_insere_adj(grafo* grafo_p, int vtx, int adj) {
 
 		grafo* grafo_aux = grafo_busca_vtx(grafo_p, vtx);
 
-		grafo_aux->vtx_adj = lst_pilha_insere(grafo_aux->vtx_adj, adj);
+		grafo_aux->vtx_adj = lst_push(grafo_aux->vtx_adj, adj);
 	}
 
 	return grafo_p;
@@ -154,4 +165,182 @@ void grafo_libera(grafo* grafo_p) {
 
 		i_pointer = tmp;
 	}
+}
+
+/* Funcoes para busca em grafos */
+
+guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s ) {
+
+    guia* guia_aux = (guia*) malloc (sizeof (guia));
+
+    guia_aux->matriz_aux = (int**) calloc ( GUIA_N_LINHAS, sizeof(int*)); // Aloca linhas
+    
+    for (int i = 0; i < GUIA_N_LINHAS; i++){
+
+        guia_aux->matriz_aux[i] = (int*) calloc ( n_vtx + 1, sizeof(int)); // Aloca colunas
+    }
+    
+    guia_aux->Q = lst_cria();
+
+    guia_aux->matriz_aux[1][0] = 107;   // k, distancia da fonte_s
+    guia_aux->matriz_aux[2][0] = 112;   // p, pai da arvore de descoberta (eh o PI)
+    guia_aux->matriz_aux[3][0] = 99;    // c, cor do vertice (0 = branco, 1 = cinza, 2 = preto)
+
+	for (int j = 1; j <= n_vtx ; j++)  guia_aux->matriz_aux[2][j] = 63;		// pais desconhecidos inicialmente
+
+
+    guia_aux->matriz_aux[0][0] = fonte_s;	// [0][0] eh a posicao da fonte_s	
+    grafo* i_pointer = grafo_p;
+
+    for (int i = 1; i < n_vtx + 1; i++) {
+
+        guia_aux->matriz_aux[0][i] = i_pointer->vtx_adj->info;
+        i_pointer = i_pointer->next;
+    }
+
+    return guia_aux;
+}
+
+void guia_imprime(guia* guia_p, int n_vtx) {
+
+    for (int i = 0; i < GUIA_N_LINHAS; i++) {
+
+        for (int j = 0; j < n_vtx + 1; j++) {
+
+            switch (i) {
+
+                case 0:
+                    
+					               
+                    if (j == 0)  {
+					
+						printf("    ");
+
+					}
+					else if (guia_p->matriz_aux[i][j] == guia_p->matriz_aux[0][0]) {
+
+						printf("\033[0;32m"); // Deixa saida de texto verde
+						printf("%c   ", guia_p->matriz_aux[i][j]);
+						printf("\033[0;37m"); // Volta a deixar saida de texto branca
+					}
+                    else printf("%c   ", guia_p->matriz_aux[i][j]);
+
+                break;
+            
+                case 2:
+
+                    if (j == 0) {
+
+						printf("\033[1;33m"); // Deixa saida de texto amarela
+						printf("%c   ", guia_p->matriz_aux[i][j]);
+						printf("\033[0;37m"); // Volta a deixar saida de texto branca
+					}
+					else printf("%c   ", guia_p->matriz_aux[i][j]);
+
+                break;
+
+				default:
+
+                    if (j == 0) {
+
+						printf("\033[1;33m"); // Deixa saida de texto amarela
+						printf("%c   ", guia_p->matriz_aux[i][j]);
+						printf("\033[0;37m"); // Volta a deixar saida de texto branca
+					}
+					else printf("%d   ", guia_p->matriz_aux[i][j]);
+
+				break; 
+
+            }
+
+        }
+        printf("\n");
+    }
+
+	printf("\n");
+}
+
+
+void guia_libera (guia* guia_p) {
+
+	for (int i = 0; i < GUIA_N_LINHAS; i++) {
+
+		free(guia_p->matriz_aux[i]);
+	}
+
+	free(guia_p->matriz_aux);
+	lst_libera (guia_p->Q);
+
+	free(guia_p);
+}
+
+
+int guia_obtem_coluna (guia* guia_p, int info_p) {
+
+	int i;
+	for ( i = 1; guia_p->matriz_aux [0][i] != info_p ; i++);
+
+	return i;
+}
+
+int guia_obtem_cor (guia* guia_p, int info_p) {
+
+	int coluna = guia_obtem_coluna (guia_p, info_p);
+
+	return guia_p->matriz_aux[C][coluna];
+}
+
+void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
+
+
+	for (lista_t* j_pointer = grafo_p->vtx_adj->prox; j_pointer != NULL; j_pointer = j_pointer->prox) {
+
+		// Evita que se tenha elementos repetidos em Q
+		if ( (lst_busca(guia_p->Q, j_pointer->info) == NULL) && (guia_obtem_cor(guia_p, j_pointer->info) != PRETO) ){ 
+		 
+			// Se chegou aqui, insere na lista Q e atualiza guia
+			guia_p->Q = lst_insere (guia_p->Q, j_pointer->info);	
+
+			int coluna_aux = guia_obtem_coluna (guia_p, j_pointer->info);
+
+			// Set distacia da fonte
+			guia_p->matriz_aux[K][coluna_aux] = guia_p->matriz_aux[K][coluna_p] + 1;
+			// Set pai da arvore de descoberta
+			guia_p->matriz_aux[P][coluna_aux] = grafo_p->vtx_adj->info;
+			// Set cor
+			guia_p->matriz_aux[C][coluna_aux] ++;
+
+			// guia_imprime (guia_p, 4);
+		}
+	}
+}
+
+tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p) {
+
+	int coluna, coluna_aux;
+
+	grafo* i_pointer = grafo_busca_vtx (grafo_p, guia_p->matriz_aux[0][0]);
+	coluna = guia_obtem_coluna (guia_p, i_pointer->vtx_adj->info);
+
+	guia_atualiza (i_pointer, guia_p, coluna);
+	
+	guia_p->matriz_aux[C][coluna] = PRETO; // Raiz preta, raiz concluida
+
+	lst_imprime (guia_p->Q);
+
+	while ( guia_p->Q != NULL ) {
+
+		printf("i");
+
+		i_pointer = grafo_busca_vtx (grafo_p, guia_p->Q->info);
+		printf("\t%d\n", guia_p->Q->info);
+		coluna = guia_obtem_coluna (guia_p, i_pointer->vtx_adj->info);
+
+		guia_atualiza (i_pointer, guia_p, coluna);
+	
+		guia_p->matriz_aux[C][coluna]++;
+		lst_retira (guia_p->Q);
+	}
+
+	return NULL;
 }

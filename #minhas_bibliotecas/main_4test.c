@@ -13,37 +13,37 @@
 #define VERDADEIRO 1 // 1 == 1
 #define FALSO 0 // !VERDADEIRO
 
-grafo* grafo_ini_aux_busca () {
+grafo* grafo_ini_aux_busca (int n_vtx) {
 
 	grafo* search_aux = grafo_cria (4);
 
 	lista_t* lst_aux = lst_cria ();
 
-	lst_aux = lst_insere (lst_aux, 113); // q, lista de vertice a serem explorados
-	lst_aux = lst_insere (lst_aux, 99); // c, cor dos vertices
-	lst_aux = lst_insere (lst_aux, 98); // b, endereço mais prox da fonte
-	lst_aux = lst_insere (lst_aux, 100); // d, distancia da fonte
+	lst_aux = lst_insere (lst_aux, 81); 	// Q, lista de vertice a serem explorados
+	lst_aux = lst_insere (lst_aux, 99);		// c, cor dos vertices
+	lst_aux = lst_insere (lst_aux, 112);	// p, endereço mais prox da fonte
+	lst_aux = lst_insere (lst_aux, 107); 	// k, distancia da fonte
  
-	search_aux = grafo_insere_vtx (grafo_p, lst_aux);
+	search_aux = grafo_insere_vtx (search_aux, lst_aux);
 	lst_libera(lst_aux);
 
 	grafo* i_pointer = grafo_busca_vtx(search_aux, 99);
 	// Deixa todos os vertices brancos (w)
-	for (int i = 0; i < n_vtx, i++ ) {
+	for (int i = 0; i < n_vtx; i++ ) {
 
 		i_pointer->vtx_adj = lst_push(i_pointer->vtx_adj, 119);
 	}
 
-	grafo* i_pointer = grafo_busca_vtx(search_aux, 98);
+	grafo* i_pointer = grafo_busca_vtx(search_aux, 112);
 	// Deixa todos os vertices indefinos (-1)
-	for (int i = 0; i < n_vtx, i++ ) {
+	for (int i = 0; i < n_vtx; i++ ) {
 
 		i_pointer->vtx_adj = lst_push(i_pointer->vtx_adj, -1);
 	}
 
-	grafo* i_pointer = grafo_busca_vtx(search_aux, 100);
+	grafo* i_pointer = grafo_busca_vtx(search_aux, 107);
 	// Deixa todos os vertices indefinos (-1)
-	for (int i = 0; i < n_vtx, i++ ) {
+	for (int i = 0; i < n_vtx; i++ ) {
 
 		i_pointer->vtx_adj = lst_push(i_pointer->vtx_adj, -1);
 	}
@@ -86,6 +86,7 @@ int main (int argc, char** argv) {
 
 	tree_var* tree_caminhos = tree_var_cria();
 
+	int n_vtx = 5;
 	/*
 	COMENTARIOS DO QUE FAZER
 
