@@ -57,19 +57,13 @@ lista_t* lst_push(lista_t* lista_p, int info_param) {
 
 void lst_retira(lista_t* lista_p) {
 
-	if (lst_vazia(lista_p) == VERDADEIRO) {
-
-		return; // Ao retornar para main, pedir para verificar ERRO
-	}
-
-	lista_t* remover_elem;
-	remover_elem = (lista_t*)malloc(sizeof(lista_t));
-	remover_elem = lista_p;
+	if (lst_vazia(lista_p) == VERDADEIRO) return; // Ao retornar para main, pedir para verificar ERRO	}
+	
+	lista_t* remover_elem = lista_p;
 
 	lista_p = lista_p->prox;
 
 	free(remover_elem);
-
 }
 
 lista_t* lst_retira_objetiva(lista_t* lista_p, int rm_info) {

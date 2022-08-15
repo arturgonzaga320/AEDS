@@ -203,17 +203,18 @@ guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s ) {
 
 void guia_imprime(guia* guia_p, int n_vtx) {
 
-    for (int i = 0; i < GUIA_N_LINHAS; i++) {
 
-        for (int j = 0; j < n_vtx + 1; j++) {
+	for (int i = 0; i < GUIA_N_LINHAS; i++) {
 
-            switch (i) {
+		for (int j = 0; j < n_vtx + 1; j++) {
 
-                case 0:
-                    
-					               
-                    if (j == 0)  {
-					
+			switch (i) {
+
+				case 0:
+						
+									
+					if (j == 0)  {
+						
 						printf("    ");
 
 					}
@@ -223,13 +224,13 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 						printf("%c   ", guia_p->matriz_aux[i][j]);
 						printf("\033[0;37m"); // Volta a deixar saida de texto branca
 					}
-                    else printf("%c   ", guia_p->matriz_aux[i][j]);
+					else printf("%c   ", guia_p->matriz_aux[i][j]);
 
-                break;
-            
-                case 2:
+				break;
+				
+				case 2:
 
-                    if (j == 0) {
+					if (j == 0) {
 
 						printf("\033[1;33m"); // Deixa saida de texto amarela
 						printf("%c   ", guia_p->matriz_aux[i][j]);
@@ -237,11 +238,11 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 					}
 					else printf("%c   ", guia_p->matriz_aux[i][j]);
 
-                break;
+				break;
 
 				default:
 
-                    if (j == 0) {
+					if (j == 0) {
 
 						printf("\033[1;33m"); // Deixa saida de texto amarela
 						printf("%c   ", guia_p->matriz_aux[i][j]);
@@ -251,12 +252,10 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 
 				break; 
 
-            }
-
-        }
-        printf("\n");
-    }
-
+			}
+		}
+		printf("\n");
+	}
 	printf("\n");
 }
 
@@ -310,7 +309,6 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 			// Set cor
 			guia_p->matriz_aux[C][coluna_aux] ++;
 
-			// guia_imprime (guia_p, 4);
 		}
 	}
 }
@@ -326,20 +324,15 @@ tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p) {
 	
 	guia_p->matriz_aux[C][coluna] = PRETO; // Raiz preta, raiz concluida
 
-	lst_imprime (guia_p->Q);
-
 	while ( guia_p->Q != NULL ) {
 
-		printf("i");
-
 		i_pointer = grafo_busca_vtx (grafo_p, guia_p->Q->info);
-		printf("\t%d\n", guia_p->Q->info);
 		coluna = guia_obtem_coluna (guia_p, i_pointer->vtx_adj->info);
 
 		guia_atualiza (i_pointer, guia_p, coluna);
 	
 		guia_p->matriz_aux[C][coluna]++;
-		lst_retira (guia_p->Q);
+		guia_p->Q = lst_retira_objetiva (guia_p->Q, i_pointer->vtx_adj->info);
 	}
 
 	return NULL;

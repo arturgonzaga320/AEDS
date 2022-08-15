@@ -33,16 +33,16 @@ int main (int argc, char** argv) {
 	grafo_nao_ordenado(pontes_Konigsberg, 98,100);
 	grafo_nao_ordenado(pontes_Konigsberg, 99,100);
 
-	//for (int i = 0; i < 2;i++)	grafo_nao_ordenado(pontes_Konigsberg, 97, 98);
-	//for (int i = 0; i < 2;i++)	grafo_nao_ordenado(pontes_Konigsberg, 98,99);
+	for (int i = 0; i < 2;i++)	grafo_nao_ordenado(pontes_Konigsberg, 97, 98);
+	for (int i = 0; i < 2;i++)	grafo_nao_ordenado(pontes_Konigsberg, 98,99);
 
 	grafo_imprime(pontes_Konigsberg);
 	printf("\n");
 
     guia* teste = guia_cria (pontes_Konigsberg, n_vertices, 98);
+    guia_imprime (teste, n_vertices);
 
 	tree_var* anda = grafo_bfs(pontes_Konigsberg, teste);
-
     guia_imprime (teste, n_vertices);
 
 	grafo_libera(pontes_Konigsberg);
