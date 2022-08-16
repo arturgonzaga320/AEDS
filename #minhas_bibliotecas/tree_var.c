@@ -92,9 +92,19 @@ tree_var* tree_var_add_son ( tree_var* tree_p, int info_p) {
 	if (tree_var_vazia (i_pointer) == VERDADEIRO ) {
 
 		i_pointer = tree_var_preenche (i_pointer, info_p);
+		return i_pointer;
 	}
-	else i_pointer->son = tree_var_preenche (i_pointer, info_p);
-
+	
+	
+	if (tree_var_vazia (i_pointer->son) == VERDADEIRO ) {
+	
+		i_pointer->son = tree_var_preenche (i_pointer, info_p);
+	}
+	else {
+		
+		i_pointer->son = tree_var_add_bro (i_pointer->son, info_p);
+	}
+	
 	return i_pointer;
 }
 

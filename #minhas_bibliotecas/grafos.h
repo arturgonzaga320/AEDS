@@ -18,7 +18,7 @@ typedef struct grafo_s {
 
 typedef struct guia_busca {
 
-    int** matriz_aux;
+    int** matriz;
     lista_t* Q;
 
 } guia;

@@ -13,6 +13,7 @@
 #define K 1
 #define P 2
 #define C 3
+#define VTX 0 // Linha dos vertices na matriz de guia
 #define BRANCO 0
 #define CINZA 1
 #define PRETO 2
@@ -173,28 +174,28 @@ guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s ) {
 
     guia* guia_aux = (guia*) malloc (sizeof (guia));
 
-    guia_aux->matriz_aux = (int**) calloc ( GUIA_N_LINHAS, sizeof(int*)); // Aloca linhas
+    guia_aux->matriz = (int**) calloc ( GUIA_N_LINHAS, sizeof(int*)); // Aloca linhas
     
     for (int i = 0; i < GUIA_N_LINHAS; i++){
 
-        guia_aux->matriz_aux[i] = (int*) calloc ( n_vtx + 1, sizeof(int)); // Aloca colunas
+        guia_aux->matriz[i] = (int*) calloc ( n_vtx + 1, sizeof(int)); // Aloca colunas
     }
     
     guia_aux->Q = lst_cria();
 
-    guia_aux->matriz_aux[1][0] = 107;   // k, distancia da fonte_s
-    guia_aux->matriz_aux[2][0] = 112;   // p, pai da arvore de descoberta (eh o PI)
-    guia_aux->matriz_aux[3][0] = 99;    // c, cor do vertice (0 = branco, 1 = cinza, 2 = preto)
+    guia_aux->matriz[1][0] = 107;   // k, distancia da fonte_s
+    guia_aux->matriz[2][0] = 112;   // p, pai da arvore de descoberta (eh o PI)
+    guia_aux->matriz[3][0] = 99;    // c, cor do vertice (0 = branco, 1 = cinza, 2 = preto)
 
-	for (int j = 1; j <= n_vtx ; j++)  guia_aux->matriz_aux[2][j] = 63;		// pais desconhecidos inicialmente
+	for (int j = 1; j <= n_vtx ; j++)  guia_aux->matriz[2][j] = 63;		// pais desconhecidos inicialmente
 
 
-    guia_aux->matriz_aux[0][0] = fonte_s;	// [0][0] eh a posicao da fonte_s	
+    guia_aux->matriz[0][0] = fonte_s;	// [0][0] eh a posicao da fonte_s	
     grafo* i_pointer = grafo_p;
 
     for (int i = 1; i < n_vtx + 1; i++) {
 
-        guia_aux->matriz_aux[0][i] = i_pointer->vtx_adj->info;
+        guia_aux->matriz[0][i] = i_pointer->vtx_adj->info;
         i_pointer = i_pointer->next;
     }
 
@@ -218,13 +219,13 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 						printf("    ");
 
 					}
-					else if (guia_p->matriz_aux[i][j] == guia_p->matriz_aux[0][0]) {
+					else if (guia_p->matriz[i][j] == guia_p->matriz_aux[0][0]) {
 
 						printf("\033[0;32m"); // Deixa saida de texto verde
-						printf("%c   ", guia_p->matriz_aux[i][j]);
+						printf("%c   ", guia_p->matriz[i][j]);
 						printf("\033[0;37m"); // Volta a deixar saida de texto branca
 					}
-					else printf("%c   ", guia_p->matriz_aux[i][j]);
+					else printf("%c   ", guia_p->matriz[i][j]);
 
 				break;
 				
@@ -233,10 +234,10 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 					if (j == 0) {
 
 						printf("\033[1;33m"); // Deixa saida de texto amarela
-						printf("%c   ", guia_p->matriz_aux[i][j]);
+						printf("%c   ", guia_p->matriz[i][j]);
 						printf("\033[0;37m"); // Volta a deixar saida de texto branca
 					}
-					else printf("%c   ", guia_p->matriz_aux[i][j]);
+					else printf("%c   ", guia_p->matriz[i][j]);
 
 				break;
 
@@ -245,10 +246,10 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 					if (j == 0) {
 
 						printf("\033[1;33m"); // Deixa saida de texto amarela
-						printf("%c   ", guia_p->matriz_aux[i][j]);
+						printf("%c   ", guia_p->matriz[i][j]);
 						printf("\033[0;37m"); // Volta a deixar saida de texto branca
 					}
-					else printf("%d   ", guia_p->matriz_aux[i][j]);
+					else printf("%d   ", guia_p->matriz[i][j]);
 
 				break; 
 
@@ -264,10 +265,10 @@ void guia_libera (guia* guia_p) {
 
 	for (int i = 0; i < GUIA_N_LINHAS; i++) {
 
-		free(guia_p->matriz_aux[i]);
+		free(guia_p->matriz[i]);
 	}
 
-	free(guia_p->matriz_aux);
+	free(guia_p->matriz);
 	lst_libera (guia_p->Q);
 
 	free(guia_p);
@@ -277,7 +278,7 @@ void guia_libera (guia* guia_p) {
 int guia_obtem_coluna (guia* guia_p, int info_p) {
 
 	int i;
-	for ( i = 1; guia_p->matriz_aux [0][i] != info_p ; i++);
+	for ( i = 1; guia_p->matriz [VTX][i] != info_p ; i++);
 
 	return i;
 }
@@ -286,7 +287,7 @@ int guia_obtem_cor (guia* guia_p, int info_p) {
 
 	int coluna = guia_obtem_coluna (guia_p, info_p);
 
-	return guia_p->matriz_aux[C][coluna];
+	return guia_p->matriz[C][coluna];
 }
 
 void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
@@ -303,11 +304,11 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 			int coluna_aux = guia_obtem_coluna (guia_p, j_pointer->info);
 
 			// Set distacia da fonte
-			guia_p->matriz_aux[K][coluna_aux] = guia_p->matriz_aux[K][coluna_p] + 1;
+			guia_p->matriz[K][coluna_aux] = guia_p->matriz_aux[K][coluna_p] + 1;
 			// Set pai da arvore de descoberta
-			guia_p->matriz_aux[P][coluna_aux] = grafo_p->vtx_adj->info;
+			guia_p->matriz[P][coluna_aux] = grafo_p->vtx_adj->info;
 			// Set cor
-			guia_p->matriz_aux[C][coluna_aux] ++;
+			guia_p->matriz[C][coluna_aux] ++;
 
 		}
 	}
@@ -316,13 +317,14 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p) {
 
 	int coluna, coluna_aux;
+	int fonte_s = guia_p->matriz[VTX][0];
 
-	grafo* i_pointer = grafo_busca_vtx (grafo_p, guia_p->matriz_aux[0][0]);
+	grafo* i_pointer = grafo_busca_vtx (grafo_p, fonte_s);
 	coluna = guia_obtem_coluna (guia_p, i_pointer->vtx_adj->info);
 
 	guia_atualiza (i_pointer, guia_p, coluna);
 	
-	guia_p->matriz_aux[C][coluna] = PRETO; // Raiz preta, raiz concluida
+	guia_p->matriz[C][coluna] = PRETO; // Raiz preta, raiz concluida
 
 	while ( guia_p->Q != NULL ) {
 
@@ -331,9 +333,41 @@ tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p) {
 
 		guia_atualiza (i_pointer, guia_p, coluna);
 	
-		guia_p->matriz_aux[C][coluna]++;
+		guia_p->matriz[C][coluna]++;
 		guia_p->Q = lst_retira_objetiva (guia_p->Q, i_pointer->vtx_adj->info);
 	}
+
+
+	// Desenvolve arvore de descoberta
+
+	tree_var tree_descoberta = tree_var_cria();
+
+	tree_descoberta = tree_var_preenche (tree_descoberta, fonte_s);
+
+	for (int i = 1; i <= n_vtx; i++) {
+
+		if (guia_aux[P][i] == fonte_s) {
+
+			tree_descoberta = tree_var_add_son(tree_descoberta, guia_aux->matriz[VTX][i]);
+
+			if ( lst_busca(guia_aux->Q, guia_aux->matriz[VTX][i]) == NULL) { 
+
+				guia_aux->Q = lst_insere(guia_aux->matriz[VTX][i]);
+			}
+		} 
+	}
+
+	while ( guia_aux->Q != NULL ) {
+	
+
+
+
+
+
+
+
+
+
 
 	return NULL;
 }
