@@ -22,7 +22,7 @@ bool tree_var_vazia ( tree_var* tree_p ) {
 	else return FALSO;
 }
 
-tree_var* tree_var_preenche (tree_var* tree_p, int info_p) {
+tree_var* tree_var_preenche (int info_p) {
 
 	// Aloca
 	tree_var* tree_aux = (tree_var*) malloc (sizeof (tree_var));
@@ -68,7 +68,7 @@ tree_var* tree_var_add_bro ( tree_var* tree_p, int info_p) {
 	
 	if (tree_var_vazia (i_pointer) == VERDADEIRO ) {
 
-		i_pointer = tree_var_preenche(i_pointer, info_p);
+		i_pointer = tree_var_preenche(info_p);
 		
 		return i_pointer;
 	}
@@ -77,7 +77,7 @@ tree_var* tree_var_add_bro ( tree_var* tree_p, int info_p) {
 	
 		while (i_pointer->bro != NULL) i_pointer = i_pointer->bro;
 
-		tree_var* tree_aux = tree_var_preenche (tree_aux, info_p);
+		tree_var* tree_aux = tree_var_preenche (info_p);
 
 		i_pointer->bro = tree_aux;
 	}
@@ -91,14 +91,14 @@ tree_var* tree_var_add_son ( tree_var* tree_p, int info_p) {
 	
 	if (tree_var_vazia (i_pointer) == VERDADEIRO ) {
 
-		i_pointer = tree_var_preenche (i_pointer, info_p);
+		i_pointer = tree_var_preenche (info_p);
 		return i_pointer;
 	}
 	
 	
 	if (tree_var_vazia (i_pointer->son) == VERDADEIRO ) {
 	
-		i_pointer->son = tree_var_preenche (i_pointer, info_p);
+		i_pointer->son = tree_var_preenche (info_p);
 	}
 	else {
 		

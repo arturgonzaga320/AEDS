@@ -48,8 +48,8 @@ void guia_imprime(guia* guia_p, int n_vtx);
 
 void guia_libera (guia* guia_p);
 
-int guia_obtem_coluna (guia* guia_p, int info_p);
+// int guia_obtem_coluna (guia* guia_p, int info_p);
 
-void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p);
+// void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p);
 
-tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p);
+tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p, int n_vtx);

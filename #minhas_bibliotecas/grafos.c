@@ -190,12 +190,12 @@ guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s ) {
 	for (int j = 1; j <= n_vtx ; j++)  guia_aux->matriz[2][j] = 63;		// pais desconhecidos inicialmente
 
 
-    guia_aux->matriz[0][0] = fonte_s;	// [0][0] eh a posicao da fonte_s	
+    guia_aux->matriz[VTX][0] = fonte_s;	// [0][0] eh a posicao da fonte_s	
     grafo* i_pointer = grafo_p;
 
     for (int i = 1; i < n_vtx + 1; i++) {
 
-        guia_aux->matriz[0][i] = i_pointer->vtx_adj->info;
+        guia_aux->matriz[VTX][i] = i_pointer->vtx_adj->info;
         i_pointer = i_pointer->next;
     }
 
@@ -219,7 +219,7 @@ void guia_imprime(guia* guia_p, int n_vtx) {
 						printf("    ");
 
 					}
-					else if (guia_p->matriz[i][j] == guia_p->matriz_aux[0][0]) {
+					else if (guia_p->matriz[i][j] == guia_p->matriz[0][0]) {
 
 						printf("\033[0;32m"); // Deixa saida de texto verde
 						printf("%c   ", guia_p->matriz[i][j]);
@@ -304,7 +304,7 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 			int coluna_aux = guia_obtem_coluna (guia_p, j_pointer->info);
 
 			// Set distacia da fonte
-			guia_p->matriz[K][coluna_aux] = guia_p->matriz_aux[K][coluna_p] + 1;
+			guia_p->matriz[K][coluna_aux] = guia_p->matriz[K][coluna_p] + 1;
 			// Set pai da arvore de descoberta
 			guia_p->matriz[P][coluna_aux] = grafo_p->vtx_adj->info;
 			// Set cor
@@ -314,7 +314,25 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 	}
 }
 
-tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p) {
+void guia_atualiza_arv (guia* guia_p, tree_var* tree_p, int n_vtx, int fonte_s){
+
+	guia* guia_aux = guia_p;
+
+	for (int i = 1; i <= n_vtx; i++) {
+
+		if (guia_aux->matriz[P][i] == fonte_s) {
+
+			tree_p = tree_var_add_son(tree_p, guia_aux->matriz[VTX][i]);
+
+			if ( lst_busca(guia_aux->Q, guia_aux->matriz[VTX][i]) == NULL) { 
+
+				guia_aux->Q = lst_insere(guia_aux->Q, guia_aux->matriz[VTX][i]);
+			}
+		} 
+	}
+}
+
+tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p, int n_vtx) {
 
 	int coluna, coluna_aux;
 	int fonte_s = guia_p->matriz[VTX][0];
@@ -337,37 +355,22 @@ tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p) {
 		guia_p->Q = lst_retira_objetiva (guia_p->Q, i_pointer->vtx_adj->info);
 	}
 
-
 	// Desenvolve arvore de descoberta
 
-	tree_var tree_descoberta = tree_var_cria();
+	tree_var* tree_descoberta = tree_var_cria();
+	tree_descoberta = tree_var_preenche (fonte_s);
 
-	tree_descoberta = tree_var_preenche (tree_descoberta, fonte_s);
+	guia_atualiza_arv(guia_p, tree_descoberta, n_vtx, fonte_s);
 
-	for (int i = 1; i <= n_vtx; i++) {
+	for (tree_var* i_pointer = tree_descoberta->son; guia_p->Q != NULL && i_pointer->son; i_pointer = i_pointer->son) {
 
-		if (guia_aux[P][i] == fonte_s) {
+		int tmp_source = guia_p->Q->info;
+		
+		guia_atualiza_arv(guia_p, i_pointer, n_vtx, tmp_source);
+		guia_p->Q = lst_retira_objetiva (guia_p->Q, tmp_source);
 
-			tree_descoberta = tree_var_add_son(tree_descoberta, guia_aux->matriz[VTX][i]);
-
-			if ( lst_busca(guia_aux->Q, guia_aux->matriz[VTX][i]) == NULL) { 
-
-				guia_aux->Q = lst_insere(guia_aux->matriz[VTX][i]);
-			}
-		} 
+		if (guia_p->Q == NULL) return tree_descoberta;
 	}
 
-	while ( guia_aux->Q != NULL ) {
-	
-
-
-
-
-
-
-
-
-
-
-	return NULL;
+	return tree_descoberta;
 }

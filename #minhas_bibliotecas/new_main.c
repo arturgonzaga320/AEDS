@@ -21,7 +21,6 @@ int main (int argc, char** argv) {
 	lista_t* valores = lst_cria();
 
 	grafo* pontes_Konigsberg = grafo_cria(n_vertices);
-	grafo* i_pointer;
 
 	// Vertices 'a','b','c' e 'd' 
 	for (int i = 100; i > 96; i--)	valores = lst_insere(valores, i);
@@ -40,10 +39,9 @@ int main (int argc, char** argv) {
 	printf("\n");
 
     guia* teste = guia_cria (pontes_Konigsberg, n_vertices, 98);
-    guia_imprime (teste, n_vertices);
 
-	tree_var* anda = grafo_bfs(pontes_Konigsberg, teste);
-    guia_imprime (teste, n_vertices);
+	tree_var* anda = grafo_bfs(pontes_Konigsberg, teste, n_vertices);
+	guia_imprime(teste, n_vertices);
 
 	grafo_libera(pontes_Konigsberg);
 	guia_libera(teste);
