@@ -4,7 +4,7 @@
 
 // Bibliotecas
 #include <stdint.h>
-#include "listas.h"
+#include "listas_adj.h"
 #include "tree_var.h"
 
 
@@ -47,9 +47,5 @@ guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s);
 void guia_imprime(guia* guia_p, int n_vtx);
 
 void guia_libera (guia* guia_p);
-
-// int guia_obtem_coluna (guia* guia_p, int info_p);
-
-// void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p);
 
 tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p, int n_vtx);

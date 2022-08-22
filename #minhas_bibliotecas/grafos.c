@@ -42,7 +42,7 @@ grafo* grafo_insere_vtx (grafo* grafo_p,lista_t* valores) {
 		grafo_p->next = grafo_insere_vtx(grafo_p->next, valores->prox);
 	}
 
-	grafo_p->vtx_adj = lst_insere(grafo_p->vtx_adj, valores->info);
+	grafo_p->vtx_adj = lst_insere(grafo_p->vtx_adj, valores->info, valores->peso_ini,valores->peso_fim);
 	valores = valores->prox;
 
 	return grafo_p;
@@ -86,8 +86,9 @@ grafo* grafo_insere_adj(grafo* grafo_p, int vtx, int adj) {
 	if (grafo_busca_vtx(grafo_p, vtx) != NULL) {
 
 		grafo* grafo_aux = grafo_busca_vtx(grafo_p, vtx);
+		grafo* grafo_sec = grafo_busca_vtx(grafo_p, adj);
 
-		grafo_aux->vtx_adj = lst_push(grafo_aux->vtx_adj, adj);
+		grafo_aux->vtx_adj = lst_push(grafo_aux->vtx_adj, adj, grafo_sec->vtx_adj->peso_ini, grafo_sec->vtx_adj->peso_fim);
 	}
 
 	return grafo_p;
@@ -172,20 +173,21 @@ void grafo_libera(grafo* grafo_p) {
 
 guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s ) {
 
+	int n_colunas = n_vtx + 1;
     guia* guia_aux = (guia*) malloc (sizeof (guia));
 
     guia_aux->matriz = (int**) calloc ( GUIA_N_LINHAS, sizeof(int*)); // Aloca linhas
     
     for (int i = 0; i < GUIA_N_LINHAS; i++){
 
-        guia_aux->matriz[i] = (int*) calloc ( n_vtx + 1, sizeof(int)); // Aloca colunas
+        guia_aux->matriz[i] = (int*) calloc ( n_colunas, sizeof(int)); // Aloca colunas
     }
     
     guia_aux->Q = lst_cria();
 
-    guia_aux->matriz[1][0] = 107;   // k, distancia da fonte_s
-    guia_aux->matriz[2][0] = 112;   // p, pai da arvore de descoberta (eh o PI)
-    guia_aux->matriz[3][0] = 99;    // c, cor do vertice (0 = branco, 1 = cinza, 2 = preto)
+    guia_aux->matriz[K][0] = 107;   // k, distancia da fonte_s
+    guia_aux->matriz[P][0] = 112;   // p, pai da arvore de descoberta (eh o PI)
+    guia_aux->matriz[C][0] = 99;    // c, cor do vertice (0 = branco, 1 = cinza, 2 = preto)
 
 	for (int j = 1; j <= n_vtx ; j++)  guia_aux->matriz[2][j] = 63;		// pais desconhecidos inicialmente
 
@@ -193,7 +195,7 @@ guia* guia_cria (grafo* grafo_p, int n_vtx, int fonte_s ) {
     guia_aux->matriz[VTX][0] = fonte_s;	// [0][0] eh a posicao da fonte_s	
     grafo* i_pointer = grafo_p;
 
-    for (int i = 1; i < n_vtx + 1; i++) {
+    for (int i = 1; i < n_colunas; i++) {
 
         guia_aux->matriz[VTX][i] = i_pointer->vtx_adj->info;
         i_pointer = i_pointer->next;
@@ -299,7 +301,7 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 		if ( (lst_busca(guia_p->Q, j_pointer->info) == NULL) && (guia_obtem_cor(guia_p, j_pointer->info) != PRETO) ){ 
 		 
 			// Se chegou aqui, insere na lista Q e atualiza guia
-			guia_p->Q = lst_insere (guia_p->Q, j_pointer->info);	
+			guia_p->Q = lst_insere (guia_p->Q, j_pointer->info, j_pointer->peso_ini, j_pointer->peso_fim);	
 
 			int coluna_aux = guia_obtem_coluna (guia_p, j_pointer->info);
 
@@ -314,7 +316,7 @@ void guia_atualiza (grafo* grafo_p, guia* guia_p, int coluna_p) {
 	}
 }
 
-void guia_atualiza_arv (guia* guia_p, tree_var* tree_p, int n_vtx, int fonte_s){
+void guia_atualiza_arv(guia* guia_p, tree_var* tree_p, grafo* grafo_p, int n_vtx, int fonte_s) {
 
 	guia* guia_aux = guia_p;
 
@@ -324,17 +326,54 @@ void guia_atualiza_arv (guia* guia_p, tree_var* tree_p, int n_vtx, int fonte_s){
 
 			tree_p = tree_var_add_son(tree_p, guia_aux->matriz[VTX][i]);
 
+			// Reaproveitamento da lista Q
 			if ( lst_busca(guia_aux->Q, guia_aux->matriz[VTX][i]) == NULL) { 
 
-				guia_aux->Q = lst_insere(guia_aux->Q, guia_aux->matriz[VTX][i]);
+				grafo* grafo_aux = grafo_busca_vtx(grafo_p, guia_aux->matriz[VTX][i]);
+				guia_aux->Q = lst_insere(guia_aux->Q,grafo_aux->vtx_adj->info, grafo_aux->vtx_adj->peso_ini, grafo_aux->vtx_adj->peso_fim);
 			}
 		} 
 	}
 }
 
+void guia_preenche_arvore (tree_var* tree_origem, treeV_lst* lst_tree, guia* guia_p,grafo* grafo_p, int n_vtx) {
+
+	for (tree_var* tree_pointer = tree_origem->son; tree_pointer != NULL; tree_pointer = tree_pointer->son) {
+
+		int tmp_source = guia_p->Q->info;
+
+		if (tree_pointer->info != tmp_source && tree_pointer->bro != NULL ) {
+
+			for (tree_var* aux = tree_pointer->bro; aux != NULL; aux = aux->bro) {
+
+				if (lst_busca(guia_p->Q, aux->info) != NULL) {
+
+					int aux_source = aux->info;
+
+					guia_atualiza_arv(guia_p, aux, grafo_p, n_vtx, aux_source);
+					guia_p->Q = lst_retira_objetiva(guia_p->Q, aux_source);
+
+					lst_tree = treeV_lst_insere(lst_tree, aux);
+				}
+			}
+		}
+
+		if (lst_busca(guia_p->Q, tree_pointer->info) != NULL) {
+
+			tmp_source = tree_pointer->info;
+
+			guia_atualiza_arv(guia_p, tree_pointer, grafo_p, n_vtx, tmp_source);
+			guia_p->Q = lst_retira_objetiva(guia_p->Q, tmp_source);
+
+			lst_tree = treeV_lst_insere(lst_tree, tree_pointer);
+		}
+	}
+}
+
 tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p, int n_vtx) {
 
-	int coluna, coluna_aux;
+	int coluna = 0;
+	int coluna_aux = 0;
 	int fonte_s = guia_p->matriz[VTX][0];
 
 	grafo* i_pointer = grafo_busca_vtx (grafo_p, fonte_s);
@@ -355,22 +394,26 @@ tree_var* grafo_bfs (grafo* grafo_p, guia* guia_p, int n_vtx) {
 		guia_p->Q = lst_retira_objetiva (guia_p->Q, i_pointer->vtx_adj->info);
 	}
 
+	guia_imprime(guia_p, n_vtx);
+
 	// Desenvolve arvore de descoberta
 
 	tree_var* tree_descoberta = tree_var_cria();
 	tree_descoberta = tree_var_preenche (fonte_s);
 
-	guia_atualiza_arv(guia_p, tree_descoberta, n_vtx, fonte_s);
+	treeV_lst* tree_pendentes = treeV_lst_cria();
 
-	for (tree_var* i_pointer = tree_descoberta->son; guia_p->Q != NULL && i_pointer->son; i_pointer = i_pointer->son) {
+	// Estabelece raiz da arvore
+	guia_atualiza_arv(guia_p, tree_descoberta, grafo_p, n_vtx, fonte_s);
 
-		int tmp_source = guia_p->Q->info;
-		
-		guia_atualiza_arv(guia_p, i_pointer, n_vtx, tmp_source);
-		guia_p->Q = lst_retira_objetiva (guia_p->Q, tmp_source);
+	tree_pendentes = treeV_lst_insere(tree_pendentes, tree_descoberta);
 
-		if (guia_p->Q == NULL) return tree_descoberta;
+	while (tree_pendentes != NULL && guia_p->Q != NULL) {
+
+		guia_preenche_arvore(tree_pendentes->endereco_tree, tree_pendentes, guia_p, grafo_p, n_vtx);
+		tree_pendentes = treeV_lst_remove(tree_pendentes);
 	}
 
+	treeV_lst_libera(tree_pendentes);
 	return tree_descoberta;
 }

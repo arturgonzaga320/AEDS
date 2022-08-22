@@ -27,6 +27,9 @@ tree_var* tree_var_preenche (int info_p) {
 	// Aloca
 	tree_var* tree_aux = (tree_var*) malloc (sizeof (tree_var));
 
+	// Erro ao alocar arvore
+	if (tree_aux == NULL) return NULL;
+
 	// Preenche
 	tree_aux->info = info_p;
 	tree_aux->bro = NULL;
@@ -123,4 +126,54 @@ void tree_var_libera (tree_var* tree_p) {
 		if ( ( tree_var_vazia (i_pointer) == FALSO ) && (i_pointer->bro != NULL) ) tree_var_libera (i_pointer->bro);
 	}
 }
+/* Funções para listas de arvores */
 
+treeV_lst* treeV_lst_cria() {
+
+	return NULL;
+}
+
+treeV_lst* treeV_lst_insere(treeV_lst* lst_tree, tree_var* tree_p) {
+
+	treeV_lst* novo_endereco = (treeV_lst*) malloc (sizeof (treeV_lst));
+
+	if (novo_endereco == NULL) {
+
+		// Referenciamento a "novo_endereco == NULL"
+		// Erro ao alocar espaco da memoria
+		return NULL;
+	}
+
+	novo_endereco->endereco_tree = tree_p;
+	novo_endereco->prox = NULL;
+
+	treeV_lst* aux = lst_tree;
+
+	if (aux == NULL) return novo_endereco;
+
+	while (aux->prox != NULL) aux = aux->prox;
+	aux->prox = novo_endereco;
+
+	return lst_tree;
+}
+
+treeV_lst* treeV_lst_remove(treeV_lst* lst_tree) {
+
+	if (lst_tree == NULL) return NULL;
+
+	treeV_lst* aux = lst_tree->prox;
+
+	return aux;
+}
+
+void treeV_lst_libera(treeV_lst* lst_tree) {
+
+	treeV_lst* i_pointer = lst_tree;
+	
+	while (i_pointer != NULL) {
+		
+		treeV_lst* temp = i_pointer->prox; 
+		free(i_pointer);
+		i_pointer = temp;
+	}
+}

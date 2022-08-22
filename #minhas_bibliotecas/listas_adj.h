@@ -4,27 +4,28 @@
 
 #include <stdint.h>
 
-typedef uint8_t bool;
+typedef uint8_t bool_t;
 
-typedef struct lst_adj_s{
+typedef struct lst_s {
 
 	int info;
-	int peso;
-	struct lst_adj_s* prox;
-} lista_adj;
+	int peso_ini;
+	int peso_fim;
+	struct lst_s* prox;
+} lista_t;
 
-lista_adj* lst_adj_cria();
-bool lst_adj_vazia(lista_adj* lista_p);
+lista_t* lst_cria();
 
-lista_adj* lst_adj_insere(lista_adj* lista_p,int info_param);
-lista_adj* lst_adj_push(lista_adj* lista_p, int info_param); // Insere como se fosse uma pilha
+bool_t lst_vazia(lista_t* lista_p);
 
-void lst_adj_retira(lista_adj* lista_p);
-lista_adj* lst_adj_retira_objetiva (lista_adj* lista_p, int rm_info);
+lista_t* lst_insere(lista_t* lista_p, int info_p, int ini_p, int fim_p);
+lista_t* lst_push(lista_t* lista_p, int info_p, int ini_p, int fim_p);
 
-lista_adj* lst_adj_busca (lista_adj* lista_p, int info_alvo);
-lista_adj* lst_adj_busca (lista_adj* lista_p, int info_alvo);
+void lst_retira(lista_t* lista_p);
+lista_t* lst_retira_objetiva (lista_t* lista_p, int rm_info);
 
-void lst_imprime(lista_adj* lista_p);
+lista_t* lst_busca (lista_t* lista_p, int info_alvo);
 
-void lst_libera(lista_adj* lista_p);
+void lst_imprime(lista_t* lista_p);
+
+void lst_libera(lista_t* lista_p);
