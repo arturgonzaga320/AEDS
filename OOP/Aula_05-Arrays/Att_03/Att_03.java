@@ -1,12 +1,11 @@
-
 import java.util.Scanner;
 
-public class Programa {
+public class Att_03 {
 
     /* 
      * Utilize uma matriz quadrada de tamanho n para 
      * construir as n primeiras linhas do Triângulo de Pascal. 
-     */
+    */
 
     public static void main (String args[]) {
 
@@ -20,17 +19,23 @@ public class Programa {
 
         int[][] matriz = new int [n][n];
 
-        for (int i = 1; i <= n; i ++){
+        for (int i = 0; i <= n; i ++){
 
-            for ( int k = i-1; k > 0; k--){
+            matriz [i][i] = 1;
 
+            if ( i > 0 ) {
 
-                
+                matriz[i][0] = 1;
+                System.out.print(matriz [i][0] + " ");
 
+                for (int j= i - 1, k = 1; k < i; k++){
+
+                    matriz [i][k] = matriz [j][k - 1] + matriz [j][k];
+                    System.out.print(matriz [i][k] + " ");
+                }
             }
-            System.out.println ("1");
 
+            System.out.println(matriz [i][i]);
         }
-        
     }
 }
