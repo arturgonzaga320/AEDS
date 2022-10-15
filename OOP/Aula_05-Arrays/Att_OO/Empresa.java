@@ -1,11 +1,16 @@
 public class Empresa {
     
-    private Funcionario[] empregados;
+    private String nome = "NULL";
+    private String dono = "NULL";
     private String cnpj = "NULL";
 
-    public void definir_cnpj (String novo_cnpj){
+    private Funcionario[] empregados = new Funcionario[0];
 
-        this.cnpj = novo_cnpj;
+    public void definir_dadosBasicos (String nome_p,String dono_p,String cnpj_p){
+
+        this.nome = nome_p;
+        this.dono = dono_p;
+        this.cnpj = cnpj_p;
     }
 
     public void contratar_funcionario (Funcionario novo_empregado) {
@@ -25,14 +30,17 @@ public class Empresa {
 
         for (int i = 0; i < this.empregados.length; i++) {
 
-            System.out.println ("Empregada(o) da posicao: " + i);
+            System.out.println ("> Empregada(o) da posicao: " + i);
             this.empregados[i].show();
+            System.out.println ();
         }
     }
 
     public void mostra_empresa (){
 
-        System.out.println ("CNPJ: " + this.cnpj);
+        System.out.println (this.nome);
+        System.out.println ("Dono: " + this.dono);
+        System.out.println ("CNPJ: " + this.cnpj + "\n");
         this.mostra_empregados();
     }
 }

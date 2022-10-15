@@ -8,10 +8,10 @@ public class Funcionario {
 
     public void show(){
 
-        System.out.println(this.nome);
-        System.out.println(this.rg);
-        System.out.println(this.entrada.dia+ "/" + this.entrada.mes + "/" + this.entrada.ano );
-        System.out.println(this.num_setor);
-        System.out.println(this.salario);
+        System.out.println("  " + this.nome);
+        System.out.println("  RG: " + this.rg);
+        System.out.println("  Ingressado em: " + this.entrada.dia+ "/" + this.entrada.mes + "/" + this.entrada.ano );
+        System.out.println("  Setor: " + this.num_setor);
+        System.out.println("  Salario: " + this.salario);
     }
 }
