@@ -20,18 +20,12 @@ public class AtualizadorDeConstas {
 
 	public void rodar(Conta c) {
 
-		if ( this.getSelic() == c.getSaldo() ) {
+		System.out.println("Saldo Anterior: " + c.getSaldo());
 
-			System.out.println("Saldo Anterior: " + c.getSaldo());
-		}		
-		else {
+		c.atualizar(this.getSelic());
 
-			System.out.println ("Saldo Atualizado: " + c.getSaldo() + "\n");
-			this.setSaldoTotal (this.getSaldoTotal() + c.getSaldo());
+		System.out.println ("Saldo Atualizado: " + c.getSaldo() + "\n");
 
-			// this.setSelic(c.getSaldo());
-		}		
-
+		this.setSaldoTotal (this.getSaldoTotal() + c.getSaldo());
 	}
-	
 }
