@@ -1,5 +1,5 @@
 
-public class AtualizadorDeConstas {
+public class AtualizadorDeContas {
 
 	private double selic;
 	private double saldoTotal = 0;
@@ -14,8 +14,7 @@ public class AtualizadorDeConstas {
 
 	// Constructors
 	public AtualizadorDeContas (double selic) {
-
-		this.setSelic(selic);
+		this.setSelic (selic);
 	}
 
 	public void rodar(Conta c) {
