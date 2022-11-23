@@ -1,6 +1,21 @@
 public class Data {
     
-    int dia, mes, ano;
+    private int dia;
+    private int mes;
+    private int ano;
+
+    public String getData (){
+
+        String data_p = this.dia + "/" + this.mes + "/" + this.ano;
+        return data_p;
+    }
+    // Contructor = Set sem validacao de Data
+    public Data (int dia_p, int mes_p, int ano_p){
+
+        this.dia = dia_p;
+        this.mes = mes_p;
+        this.ano = ano_p;
+    }
 
     public void validar_Data() {
 
@@ -39,5 +54,13 @@ public class Data {
         this.ano = ano_p;
 
         this.validar_Data();
+    }
+
+    public boolean compararData (Data d2) {
+
+        String v1 = this.getData();
+        String v2 = d2.getData();
+
+        return v1.equals(v2);
     }
 }

@@ -1,15 +1,15 @@
 public class Restaurante {
     
     private String nome;
-    private Mesa[] mesas;
     private String endereco;
-    private Produto[] cardapio;
+    private Mesa[] mesas = new Mesa[0];
+    private Produto[] cardapio = new Produto[0];
 
     // Getters
-    public String getNome()             {return this.nome;}
-    public Mesa[] getMesas()            {return this.mesas;}
-    public String getEndereco()         {return this.endereco;}
-    public Produto[] getCardapio()     {return this.cardapio;}
+    public String getNome()             { return this.nome;}
+    public Mesa[] getMesas()            { return this.mesas;}
+    public String getEndereco()         { return this.endereco;}
+    public Produto[] getCardapio()      { return this.cardapio;}
 
     // Setters
     public void setNome (String nome_p)             {this.nome = nome_p;}
@@ -22,8 +22,12 @@ public class Restaurante {
         this.nome = nome_p;
         this.endereco = end_p;
 
-        Mesa novas[] = new Mesa[qnt_mesas];
-        for (int i = 0; i < qnt_mesas; i++) { novas[i].setNumeroMesa(i); }
+        Mesa[] novas = new Mesa[qnt_mesas];
+        for (int i = 0; i < qnt_mesas; i++) { 
+
+            novas[i] = new Mesa();
+            novas[i].setNumeroMesa(i); 
+        }
         this.setMesas(novas);
     }
 }
