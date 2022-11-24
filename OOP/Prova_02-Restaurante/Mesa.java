@@ -2,17 +2,13 @@ import java.util.Scanner;
 
 public class Mesa {
 
-    private Data data = new Data(30,2,2020);
     private int numeroMesa;
-    private boolean reserva;
-    private Cliente[] clientes = new Cliente [8];
-    private Comanda conta = new Comanda();
+    private Data[] data = new Data[0];
+    private boolean reserva = false;
 
     // Getters
     public int getNumeroMesa()                  { return this.numeroMesa; }
     public boolean getReserva()                 { return this.reserva; }
-    public Cliente[] getClientes()              { return this.clientes; }
-    public Comanda getComanda()                 { return this.conta; }
     public Data getData()                       { return this.data; }
 
     // Setters
@@ -22,12 +18,9 @@ public class Mesa {
     public void setReserva(boolean bool_p)      { this.reserva = bool_p; }
     public void setClientes(Cliente[] novos_p)  { this.clientes = novos_p;}
 
-    public Mesa (String data_p,int num_p) {
-
+    // Constructor
+    public Mesa (int num_p) {
         this.numeroMesa = num_p;
-        this.reserva = false;
-        Comanda n_conta = new Comanda();
-        this.conta = n_conta;
     }
 
     public Mesa() { }
@@ -46,9 +39,6 @@ public class Mesa {
     }
 
     public boolean reservar(int qnt_pessoas,Data horario, Scanner scan) {
-
-        // Caso a mesa ja esteja reservada
-        if (this.reserva == true) return false;
 
         Cliente[] novos = new Cliente[qnt_pessoas];
         System.out.println(">> Agendamento da reserva: CLIENTES <<");
