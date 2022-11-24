@@ -106,8 +106,8 @@ public class Programa {
     
         // Pedir numMesa
         System.out.print("> Numero da mesa: ");
-        int num_mesa = scanner.nextInt();
-        num_mesa = num_mesa - 1;
+        int entrada = scanner.nextInt();
+        int n_mesa = entrada - 1;
 
         // Listar cardarpio
 
@@ -121,6 +121,14 @@ public class Programa {
         }
         System.out.println ();
         // Criar loop while opcao !=0 { comanda.incrementar()}
+        do {
+            System.out.print("> Numero da mesa: ");
+            entrada = scanner.nextInt();
+
+
+
+
+        } while (entrada != 0);
     }
     public static void opcao3(Scanner scanner, Restaurante buchi){
 
