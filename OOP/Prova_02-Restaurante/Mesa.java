@@ -20,13 +20,16 @@ public class Mesa {
     public Mesa(/* Sem parametros */)   { /* Sem modificações; */ }
     public Mesa(int num_p)              { this.num_mesa = num_p;}
 
+    // Methods
     public void reservar(int qnt_pessoas,Data nova_data, Scanner scan) {
 
         System.out.println("\n>> Agendamento da reserva: CLIENTES <<");
 
         Cliente[] novos = new Cliente[qnt_pessoas];
-        for (int i = 0; i < qnt_pessoas; i++)
+        for (int i = 0; i < qnt_pessoas; i++) {
+            System.out.println("Cliente " + (i + 1));
             novos[i] = nova_data.adicionarCliente(scan);
+        }
 
         Data[] up_dates = new Data[this.checks.length + 1];
         for (int i = 0; i < this.checks.length; i++)
@@ -37,5 +40,16 @@ public class Mesa {
 
         this.checks = up_dates;
         this.reserva = true;
+    }
+
+    public Mesa buscar_Reserva(Data data_ref) {
+
+        Mesa aux = new Mesa();
+        for (int i = 0; i < this.checks.length; i++) {
+
+            if (this.checks[i].compararData(data_ref)) 
+                aux = this;                 // Caso seja true  
+        }
+        return aux;
     }
 }

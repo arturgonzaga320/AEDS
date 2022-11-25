@@ -30,4 +30,24 @@ public class Restaurante {
         }
         this.setMesas(novas);
     }
+    
+    public Mesa[] listar_AgendamentosDoDia (Data data_p) {
+
+        int k = 0;
+        for (int i = 0; i < this.mesas.length; i++)
+            if (this.mesas[i].buscar_Reserva(data_p) != null) k++;
+
+        Mesa[] aux = new Mesa [k];
+        k = 0;
+        for (int i = 0; i < this.mesas.length; i++) {
+            
+            if (this.mesas[i].buscar_Reserva(data_p) != null) {
+                aux[k] = this.mesas[i].buscar_Reserva(data_p);
+                k++;
+            } 
+
+
+        }
+        return aux;
+    }
 }

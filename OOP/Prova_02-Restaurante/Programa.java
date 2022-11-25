@@ -29,10 +29,10 @@ public class Programa {
         Buchinho_Cheio.setCardapio(preset);
         int opcao;
 
-        System.out.println("\n\nRESTAURANTE BUCHINHO CHEIO\n");
+        System.out.println("\n\nRESTAURANTE BUCHINHO CHEIO");
 
         do {
-            System.out.println("Serviços:\u001B[31m");
+            System.out.println("\nServiços:\u001B[31m");
             System.out.println("0 - Encerrar programa\u001B[37m");
             System.out.println("1 - Reservar mesa");
             System.out.println("2 - Realizar pedido");

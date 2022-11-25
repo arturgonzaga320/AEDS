@@ -32,6 +32,7 @@ public class Data {
     }
 
     // Contructor
+    public Data (/* Sem params */) {/* Sem mods */}
     public Data (int dia_p, int mes_p, int ano_p) {
         this.setData(dia_p, mes_p, ano_p);
     }
@@ -74,15 +75,15 @@ public class Data {
     
     public Cliente adicionarCliente( Scanner scanner) {
 
-        System.out.print("> Nome: ");
+        System.out.print("\u001B[36m");
+        System.out.print("> Nome: \u001B[37m");
         String n_p = scanner.next();
 
-        System.out.print("> E_mail: ");
+        System.out.print("\u001B[35m");
+        System.out.print("> E_mail: \u001B[37m");
         String e_p = scanner.next();
 
-        System.out.println();
         Cliente novo = new Cliente(n_p, e_p);
-
         return novo;
     }
 }
