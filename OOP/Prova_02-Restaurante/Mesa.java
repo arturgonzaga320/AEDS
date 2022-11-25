@@ -2,55 +2,40 @@ import java.util.Scanner;
 
 public class Mesa {
 
-    private int numeroMesa;
-    private Data[] data = new Data[0];
+    private int num_mesa;
+    private Data[] checks = new Data[0];
     private boolean reserva = false;
 
     // Getters
-    public int getNumeroMesa()                  { return this.numeroMesa; }
+    public int getNumeroMesa()                  { return this.num_mesa; }
     public boolean getReserva()                 { return this.reserva; }
-    public Data getData()                       { return this.data; }
+    public Data[] getData()                     { return this.checks; }
 
     // Setters
-    public void setData(Data data_p)            { this.data = data_p; }
-    public void setComanda(Comanda nova)        { this.conta = nova; }
-    public void setNumeroMesa(int num_p)        { this.numeroMesa = num_p; } 
+    public void setData(Data[] data_p)          { this.checks = data_p; }
+    public void setNumeroMesa(int num_p)        { this.num_mesa = num_p; } 
     public void setReserva(boolean bool_p)      { this.reserva = bool_p; }
-    public void setClientes(Cliente[] novos_p)  { this.clientes = novos_p;}
 
-    // Constructor
-    public Mesa (int num_p) {
-        this.numeroMesa = num_p;
-    }
+    // Constructors
+    public Mesa(/* Sem parametros */)   { /* Sem modificações; */ }
+    public Mesa(int num_p)              { this.num_mesa = num_p;}
 
-    public Mesa() { }
-    public Cliente adicionarCliente( Scanner scanner) {
+    public void reservar(int qnt_pessoas,Data nova_data, Scanner scan) {
 
-        System.out.print("\tNome: ");
-        String n_p = scanner.next();
-
-        System.out.print("\tE_mail: ");
-        String e_p = scanner.next();
-
-        System.out.println();
-        Cliente novo = new Cliente(n_p, e_p);
-
-        return novo;
-    }
-
-    public boolean reservar(int qnt_pessoas,Data horario, Scanner scan) {
+        System.out.println("\n>> Agendamento da reserva: CLIENTES <<");
 
         Cliente[] novos = new Cliente[qnt_pessoas];
-        System.out.println(">> Agendamento da reserva: CLIENTES <<");
-        for (int i = 0; i < qnt_pessoas; i++){
-            
-            novos[i] = this.adicionarCliente(scan);
-        }
+        for (int i = 0; i < qnt_pessoas; i++)
+            novos[i] = nova_data.adicionarCliente(scan);
 
-        this.setClientes(novos);
-        this.setData(horario);
+        Data[] up_dates = new Data[this.checks.length + 1];
+        for (int i = 0; i < this.checks.length; i++)
+           up_dates[i] = this.checks[i];
 
+        nova_data.setPessoas(novos);
+        up_dates[this.checks.length] = nova_data;
+
+        this.checks = up_dates;
         this.reserva = true;
-        return true;
     }
 }

@@ -23,6 +23,4 @@ public class Comanda {
 
         System.out.println(this.consumo);
     }
-
-        
 }

@@ -16,5 +16,4 @@ public class Cliente {
         this.nome = nv_nome;
         this.email = nv_email;
     }
-
 }

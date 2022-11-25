@@ -55,7 +55,8 @@ public class Programa {
                 case 2:
                 {
                     // Realizar pedido
-                    opcao2(scanner, Buchinho_Cheio);
+                    // opcao2(scanner, Buchinho_Cheio);
+                    System.out.println("Pedente");
                     break;
                 }
                 case 3:
@@ -86,14 +87,26 @@ public class Programa {
         
         for (int i = 0; i < buchi.getMesas().length; i++){
 
-            if ((buchi.getMesas()[i].getData().compararData(data_ref)) == false){
+            if (buchi.getMesas()[i].getReserva() == false) {
 
                 System.out.println("> Mesa " + ( buchi.getMesas()[i].getNumeroMesa() + 1 ));
-                System.out.println("  " + buchi.getMesas()[i].getClientes().length + " lugares disponíveis\n");
+                // System.out.println("  " + buchi.getMesas()[i].getData()[0].getPessoas().length + " lugares disponíveis\n");
+            }
+            else {
+
+                Data[] aux = buchi.getMesas()[i].getData();
+                for ( int j = 0; j < aux.length; j++){
+
+                    if (aux[j].compararData(data_ref) == false) {
+
+                        System.out.println("> Mesa " + ( buchi.getMesas()[i].getNumeroMesa() + 1 ));
+                        // System.out.println("  " + buchi.getMesas()[i].getData()[j].getPessoas().length + " lugares disponíveis\n");
+                    }
+                }
             }
         }
 
-        System.out.print("Mesa deseja que reservar: ");
+        System.out.print("\nMesa deseja que reservar: ");
         int op_1 = scanner.nextInt();
 
         System.out.print("Quantidade pessoas a serem cadastradas: ");
@@ -102,6 +115,7 @@ public class Programa {
         buchi.getMesas()[op_1 - 1].reservar(op_2, data_ref,scanner);
     }
 
+/* 
     public static void opcao2(Scanner scanner, Restaurante buchi){
     
         // Pedir numMesa
@@ -136,5 +150,5 @@ public class Programa {
 
         // Saida de pagamento efetuado
         // liberar mesa (reserva == false)
-    }
+    }*/
 }
