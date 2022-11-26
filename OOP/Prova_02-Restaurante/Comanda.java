@@ -21,7 +21,7 @@ public class Comanda {
         this.valor += nv_pedido.getValor();
     }
 
-    public void listar_Consumo(Scanner scan, int n_pessoas) { 
+    public void listar_Consumo(int n_pessoas,Scanner scan) { 
 
         System.out.print("________________________________________");
         System.out.print("\n" + this.consumo);

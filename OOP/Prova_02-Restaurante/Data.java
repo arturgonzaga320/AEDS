@@ -73,15 +73,15 @@ public class Data {
         return v1.equals(v2);
     }    
     
-    public Cliente adicionarCliente( Scanner scanner) {
+    public Cliente adicionar_Cliente( Scanner scan) {
 
         System.out.print("\u001B[36m");
         System.out.print("> Nome: \u001B[37m");
-        String n_p = scanner.next();
+        String n_p = scan.next();
 
         System.out.print("\u001B[35m");
         System.out.print("> E_mail: \u001B[37m");
-        String e_p = scanner.next();
+        String e_p = scan.next();
 
         Cliente novo = new Cliente(n_p, e_p);
         return novo;

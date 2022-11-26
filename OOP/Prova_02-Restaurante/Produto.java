@@ -10,4 +10,9 @@ public class Produto {
     // Setters
     public void setNome(String nome_p)          { this.nome = nome_p; }
     public void setValor(double valor_p)        { this.valor = valor_p;}
+
+    public Produto (String nome_p,double valor_p) {
+        this.nome = nome_p;
+        this.valor = valor_p;
+    }
 }

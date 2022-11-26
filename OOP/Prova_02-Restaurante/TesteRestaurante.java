@@ -1,28 +1,20 @@
+// Trabalho Final de AEDS: Restaurante Buchinho Cheio
+// Artur Gonzaga da Silva Gomes - 203A
+
 import java.util.Scanner;
 
-public class Programa {
+public class TesteRestaurante {
 
     // main
     public static void main (String args[]){
 
         // Template de cardapio
         Produto preset[] = new Produto[5];
-        for (int i = 0; i < 5; i ++) preset[i] = new Produto();
-
-        preset[0].setNome("Água");
-        preset[0].setValor(2.00);
-        
-        preset[1].setNome("Empada de Frango");
-        preset[1].setValor(4.50);
-
-        preset[2].setNome("Kibe");
-        preset[2].setValor(3.50);
-
-        preset[3].setNome("Refresco");
-        preset[3].setValor(0.80);
-
-        preset[4].setNome("Picolé");
-        preset[4].setValor(7.00);
+        preset[0] = new Produto("Água", 2.00);
+        preset[1] = new Produto("Empada de Frango", 4.50);
+        preset[2] = new Produto("Kibe",3.50);
+        preset[3] = new Produto("Refresco", 0.80);
+        preset[4] = new Produto("Picolé", 7.00);
 
         Scanner scan = new Scanner (System.in);
         Restaurante Buchinho_Cheio = new Restaurante ("Buchi", "Av.AntonioCarlos - 265", 8);
@@ -112,10 +104,9 @@ public class Programa {
         
         for (int i = 0; i < buchi.getMesas().length; i++){
 
-            if (buchi.getMesas()[i].getReserva() == false) {
-
+            if (buchi.getMesas()[i].getReserva() == false)
                 System.out.println("> Mesa " + ( buchi.getMesas()[i].getNumeroMesa() + 1 ));
-            }
+
             else {
 
                 Data[] aux = buchi.getMesas()[i].getData();
@@ -152,14 +143,11 @@ public class Programa {
         int entrada = scan.nextInt();
         entrada -= 1;
 
-        // buchi.getMesas()[entrada].liberar_Reserva(data_ref);
-
         // Listar cardarpio
         System.out.println("\nCardapio do dia:");
         int n_spaces = maior_string(buchi.getCardapio());
 
         for (int i = 0; i < buchi.getCardapio().length; i++) {
-
             System.out.print ( i + 1+ "-" + buchi.getCardapio()[i].getNome());
 
             for (int j = 0; j < n_spaces - buchi.getCardapio()[i].getNome().length(); j++)
@@ -211,7 +199,7 @@ public class Programa {
         int entrada = scan.nextInt();
         entrada -= 1;
 
-        buchi.getMesas()[entrada].liberar_Reserva(scan, data_ref);
+        buchi.getMesas()[entrada].liberar_Reserva(data_ref,scan);
     }
 
     public static void opcao4(Scanner scan, Restaurante buchi) {

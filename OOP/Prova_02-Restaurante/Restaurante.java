@@ -17,6 +17,7 @@ public class Restaurante {
     public void setEndereco (String end_p)          {this.endereco = end_p;}
     public void setCardapio (Produto[] card_p)      {this.cardapio = card_p;}
 
+    // Constructors
     public Restaurante (String nome_p,String end_p,int qnt_mesas) {
 
         this.nome = nome_p;

@@ -28,7 +28,7 @@ public class Mesa {
         Cliente[] novos = new Cliente[qnt_pessoas];
         for (int i = 0; i < qnt_pessoas; i++) {
             System.out.println("Cliente " + (i + 1));
-            novos[i] = nova_data.adicionarCliente(scan);
+            novos[i] = nova_data.adicionar_Cliente(scan);
         }
 
         Data[] up_dates = new Data[this.checks.length + 1];
@@ -53,7 +53,7 @@ public class Mesa {
         return null;
     }
 
-    public void liberar_Reserva(Scanner scan, Data data_ref) {
+    public void liberar_Reserva(Data data_ref,Scanner scan) {
 
         if (!this.reserva) return;
 
@@ -62,7 +62,7 @@ public class Mesa {
         for (int i = 0, j = 0; i < this.checks.length; i++) {
 
             if (this.checks[i].comparar_Data(data_ref))
-                this.checks[i].getConta().listar_Consumo(scan,this.checks[i].getPessoas().length);
+                this.checks[i].getConta().listar_Consumo(this.checks[i].getPessoas().length,scan);
 
             else {
                 aux[j] = this.checks[i];
