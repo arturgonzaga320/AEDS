@@ -5,7 +5,7 @@ public class Data {
     private int dia;
     private int mes;
     private int ano;
-    private Comanda conta;
+    private Comanda conta = new Comanda(); 
     private Cliente[] pessoas = new Cliente[8];
     
     // Getters
@@ -66,7 +66,7 @@ public class Data {
 
     }
 
-    public boolean compararData (Data d2) {
+    public boolean comparar_Data (Data d2) {
 
         String v1 = this.getData();
         String v2 = d2.getData();

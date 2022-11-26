@@ -1,7 +1,7 @@
 public class Comanda {
 
     private double valor = 0.00;
-    private String consumo;
+    private String consumo = "\n";
     
     // Getters
     public double getValor()                        { return this.valor; }
@@ -15,12 +15,16 @@ public class Comanda {
 
         String aux = nv_pedido.getValor() + "\t" + nv_pedido.getNome() + "\n";
         
-        this.consumo.concat(aux);
+        this.consumo = this.consumo.concat(aux);
         this.valor += nv_pedido.getValor();
     }
 
-    public void listarConsumo() { 
+    public void listar_Consumo() { 
 
-        System.out.println(this.consumo);
+        System.out.print("________________________________________");
+        System.out.print("\n" + this.consumo);
+        System.out.println("________________________________________");
+        System.out.println("Total: " + this.valor + " reais");
+        System.out.println("\nAgradecemos a preferência e volte sempre!");
     }
 }

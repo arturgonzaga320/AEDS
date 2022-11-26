@@ -44,12 +44,33 @@ public class Mesa {
 
     public Mesa buscar_Reserva(Data data_ref) {
 
-        Mesa aux = new Mesa();
-        for (int i = 0; i < this.checks.length; i++) {
+        if (!this.reserva) return null;
 
-            if (this.checks[i].compararData(data_ref)) 
-                aux = this;                 // Caso seja true  
+        for (int i = 0; i < this.checks.length; i++)
+            if (this.checks[i].comparar_Data(data_ref)) 
+                return this;
+
+        return null;
+    }
+
+    public void liberar_Reserva(Data data_ref) {
+
+        if (!this.reserva) return;
+
+        Data[] aux = new Data [this.checks.length - 1];
+
+        for (int i = 0, j = 0; i < this.checks.length; i++) {
+
+            if (this.checks[i].comparar_Data(data_ref))
+                this.checks[i].getConta().listar_Consumo();
+
+            else {
+                aux[j] = this.checks[i];
+                j++;
+            }
         }
-        return aux;
+
+        if (aux.length == 0) this.reserva = false;
+        this.checks = aux;
     }
 }
