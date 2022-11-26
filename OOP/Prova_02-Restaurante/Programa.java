@@ -211,7 +211,7 @@ public class Programa {
         int entrada = scan.nextInt();
         entrada -= 1;
 
-        buchi.getMesas()[entrada].liberar_Reserva(data_ref);
+        buchi.getMesas()[entrada].liberar_Reserva(scan, data_ref);
     }
 
     public static void opcao4(Scanner scan, Restaurante buchi) {

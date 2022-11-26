@@ -53,7 +53,7 @@ public class Mesa {
         return null;
     }
 
-    public void liberar_Reserva(Data data_ref) {
+    public void liberar_Reserva(Scanner scan, Data data_ref) {
 
         if (!this.reserva) return;
 
@@ -62,7 +62,7 @@ public class Mesa {
         for (int i = 0, j = 0; i < this.checks.length; i++) {
 
             if (this.checks[i].comparar_Data(data_ref))
-                this.checks[i].getConta().listar_Consumo();
+                this.checks[i].getConta().listar_Consumo(scan,this.checks[i].getPessoas().length);
 
             else {
                 aux[j] = this.checks[i];
