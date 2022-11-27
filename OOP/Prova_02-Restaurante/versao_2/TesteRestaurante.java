@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class TesteRestaurante {
 
+    static int clientes_por_mesa = 8;
+
     public static void main (String args[]){
 
         // Template de cardapio
@@ -18,6 +20,7 @@ public class TesteRestaurante {
         String[] categs = new String[2];
         categs[0] = "Comida";
         categs[1] = "Bebida";
+
 
         Restaurante buchi = new Restaurante ("Buchinho_Cheio", "Av.AntonioCarlos - 265", 8);
         buchi.setCardapio(preset);
@@ -135,8 +138,24 @@ public class TesteRestaurante {
         System.out.print ("\nMesa que deseja reservar: ");
         int op_1 = scanner.nextInt();
 
-        System.out.print ("Quantidade pessoas a serem cadastradas: ");
-        int op_2 = scanner.nextInt();
+        System.out.println ("\u001B[33m");
+        System.out.println ("* Até " + clientes_por_mesa + " pessoas por mesa, digite '0' para sair\u001B[37m");
+
+        int op_2;
+
+        do {
+
+            System.out.print ("Quantidade pessoas a serem cadastradas: ");
+            op_2 = scanner.nextInt();
+
+            if (op_2 == 0) return;
+            else if (op_2 > clientes_por_mesa) {
+
+                System.out.print   ("\u001B[31m");
+                System.out.println ("Quantidade inválida\u001B[37m");
+            }
+
+        } while (op_2 > clientes_por_mesa);
 
         buchi.getMesas()[op_1 - 1].reservar(op_2,data_ref,buchi.getCategorias(),scanner);
     }

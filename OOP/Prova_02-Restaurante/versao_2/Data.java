@@ -6,7 +6,7 @@ public class Data {
     private int mes;
     private int ano;
     private Comanda conta = new Comanda(); 
-    private Cliente[] pessoas = new Cliente[8];
+    private Cliente[] pessoas = new Cliente[0];
     
     // Getters
     public Comanda getConta()               { return this.conta;}
@@ -78,11 +78,9 @@ public class Data {
     
     public Cliente adicionar_Cliente( Scanner scan) {
 
-        //System.out.print("\u001B[36m");
         System.out.print("> Nome: ");
         String n_p = scan.next();
 
-        //System.out.print("\u001B[35m");
         System.out.print("> E_mail: ");
         String e_p = scan.next();
 
