@@ -1,10 +1,13 @@
+// Trabalho Final de AEDS: Restaurante Buchinho Cheio
+// Artur Gonzaga da Silva Gomes - 203A
+
 import java.util.Scanner;
 
 public class Comanda {
 
     protected double valor = 0.00;
     protected String consumo = "\n";
-    private Comanda_var[] tipos = new Comanda_var[0];
+    private Comanda_categ[] tipos = new Comanda_categ[0];
     
     // Getters
     public double getValor()                        { return this.valor; }
@@ -16,11 +19,11 @@ public class Comanda {
 
     public void setComandas_categs (String[] categs) {
 
-        Comanda_var[] aux_g = new Comanda_var[categs.length];
+        Comanda_categ[] aux_g = new Comanda_categ[categs.length];
 
         for (int i = 0; i < categs.length; i++) {
 
-            aux_g[i] = new Comanda_var();
+            aux_g[i] = new Comanda_categ();
             aux_g[i].setCategoria(categs[i]);
         }
 

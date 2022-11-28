@@ -1,9 +1,11 @@
+// Trabalho Final de AEDS: Restaurante Buchinho Cheio
+// Artur Gonzaga da Silva Gomes - 203A
+
 import java.util.Scanner;
 
 public class Mesa {
 
     private int num_mesa;
-    // private int num_categoria;
     private Data[] checks = new Data[0];
     private boolean reserva = false;
 

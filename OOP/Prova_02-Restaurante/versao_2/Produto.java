@@ -1,3 +1,6 @@
+// Trabalho Final de AEDS: Restaurante Buchinho Cheio
+// Artur Gonzaga da Silva Gomes - 203A
+
 public class Produto {
     
     private String nome;
@@ -5,7 +8,7 @@ public class Produto {
     private String categoria;
 
     // Getters
-    public String getNome()		{ return this.nome;}
+    public String getNome()	        { return this.nome;}
     public double getValor()		{ return this.valor;}
     public String getCategoria()	{ return this.categoria;}
 
@@ -15,8 +18,9 @@ public class Produto {
     public void setCategoria(String categ_p)    { this.categoria = categ_p;}
 
     public Produto (String nome_p,double valor_p, String categ_p) {
+
         this.nome = nome_p;
         this.valor = valor_p;
-	this.categoria = categ_p;
+        this.categoria = categ_p;
     }
 }
