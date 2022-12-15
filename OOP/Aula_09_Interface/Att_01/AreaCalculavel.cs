@@ -1,0 +1,4 @@
+interface AreaCalculavel
+{
+	double 	calculaArea();
+}
